@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MetricsManager.Controllers
 {
-	[Route("api/[controller]")]
+	[Route("api/metrics/hdd")]
 	[ApiController]
 	public class HddMetricsController : ControllerBase
 	{

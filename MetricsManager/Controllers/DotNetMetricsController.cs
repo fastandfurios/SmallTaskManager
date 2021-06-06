@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MetricsManager.Controllers
 {
-	[Route("api/[controller]")]
+	[Route("api/metrics/dotnet")]
 	[ApiController]
 	public class DotNetMetricsController : ControllerBase
 	{
