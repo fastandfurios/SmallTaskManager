@@ -11,8 +11,8 @@ namespace MetricsAgent.Controllers
 	[ApiController]
 	public class RamMetricsController : ControllerBase
 	{
-		[HttpGet("ram/available")]
-		public IActionResult GetMetricsFromAgent([FromRoute] int freeSpace)
+		[HttpGet("ram/available/{freeSpace}")]
+		public IActionResult GetMetricsFromAgent([FromRoute] long freeSpace)
 		{
 			return Ok();
 		}

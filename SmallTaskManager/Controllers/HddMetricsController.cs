@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace MetricsAgent.Controllers
 {
-	[Route("api/[controller]")]
+	[Route("api/metrics")]
 	[ApiController]
 	public class HddMetricsController : ControllerBase
 	{
-		[HttpGet("hdd/left")]
-		public IActionResult GetMetricsFromAgent([FromRoute] int freeSpace)
+		[HttpGet("hdd/left/{freeSpace}")]
+		public IActionResult GetMetricsFromAgent([FromRoute] long freeSpace)
 		{
 			return Ok();
 		}
