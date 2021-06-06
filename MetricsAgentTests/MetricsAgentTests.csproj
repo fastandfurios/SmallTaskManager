@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SmallTaskManager\MetricsAgent.csproj" />
+    <ProjectReference Include="..\MetricsAgent\MetricsAgent.csproj" />
   </ItemGroup>
 
 </Project>
