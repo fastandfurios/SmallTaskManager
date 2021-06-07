@@ -1,14 +1,15 @@
 using System;
 using MetricsAgent.Controllers;
+using Microsoft.AspNetCore.Mvc;
 using Xunit;
 
 namespace MetricsAgentTests
 {
 	public class CpuMetricsControllerTests
 	{
-		private CpuMetricsController _controller;
+		private readonly CpuMetricsController _controller;
 
-		protected CpuMetricsControllerTests() => _controller = new CpuMetricsController();
+		public CpuMetricsControllerTests() => _controller = new CpuMetricsController();
 
 		[Fact]
 		public void GetMetricsFromAgent_ReturnsOk()
@@ -17,6 +18,8 @@ namespace MetricsAgentTests
 			var toTime = TimeSpan.FromSeconds(100);
 
 			var result = _controller.GetMetricsFromAgent(fromTime, toTime);
+
+			_ = Assert.IsAssignableFrom<IActionResult>(result);
 		}
 	}
 }

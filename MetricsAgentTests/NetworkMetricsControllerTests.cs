@@ -5,17 +5,17 @@ using Xunit;
 
 namespace MetricsAgentTests
 {
-    public class DotNetMetricsControllerTests
+    public class NetworkMetricsControllerTests
     {
-	    private readonly DotNetMetricsController _controller;
+	    private readonly NetworkMetricsController _controller;
 
-	    public DotNetMetricsControllerTests() => _controller = new DotNetMetricsController();
+	    public NetworkMetricsControllerTests() => _controller = new NetworkMetricsController();
 
 		[Fact]
 		public void GetMetricsFromAgent_ReturnsOk()
 		{
 			var fromTime = TimeSpan.FromSeconds(0);
-			var toTime = TimeSpan.FromSeconds(50);
+			var toTime = TimeSpan.FromSeconds(150);
 
 			var result = _controller.GetMetricsFromAgent(fromTime, toTime);
 
