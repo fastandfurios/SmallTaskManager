@@ -13,6 +13,10 @@ namespace MetricsManager.Controllers
 	{
 		private readonly Agents _agents;
 
+		public AgentsController()
+		{
+		}
+
 		public AgentsController(Agents agents) => _agents = agents;
 
 		[HttpPost("register")]

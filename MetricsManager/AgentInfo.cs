@@ -10,5 +10,8 @@ namespace MetricsManager
     {
 	    public int AgentId { get; }
 	    public Uri AgentAddress { get; }
+
+	    public int AgentIdTest { get; } = 10;
+	    public Uri AgentAddressTest { get; } = new Uri("https://github.com");
     }
 }
