@@ -9,7 +9,7 @@ namespace MetricsAgentTests
     {
 	    private readonly NetworkMetricsController _controller;
 
-	    public NetworkMetricsControllerTests() => _controller = new NetworkMetricsController();
+	    public NetworkMetricsControllerTests(){}
 
 		[Fact]
 		public void GetMetricsFromAgent_ReturnsOk()

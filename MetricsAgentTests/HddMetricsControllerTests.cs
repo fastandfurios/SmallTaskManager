@@ -9,9 +9,11 @@ namespace MetricsAgentTests
     {
 	    private readonly HddMetricsController _controller;
 
-	    public HddMetricsControllerTests() => _controller = new HddMetricsController();
+	    public HddMetricsControllerTests()
+	    {
+	    }
 
-		[Fact]
+	    [Fact]
 		public void GetMetricsFromAgent_ReturnsOk()
 		{
 			var freeSpace = 5000000;

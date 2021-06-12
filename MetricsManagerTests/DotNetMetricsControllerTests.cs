@@ -12,7 +12,7 @@ namespace MetricsManagerTests
 
 		public DotNetMetricsControllerTests()
 		{
-			_controller = new DotNetMetricsController();
+			
 		}
 
 		[Fact]

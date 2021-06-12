@@ -9,7 +9,9 @@ namespace MetricsAgentTests
     {
 	    private readonly DotNetMetricsController _controller;
 
-	    public DotNetMetricsControllerTests() => _controller = new DotNetMetricsController();
+	    public DotNetMetricsControllerTests()
+	    {
+	    }
 
 		[Fact]
 		public void GetMetricsFromAgent_ReturnsOk()

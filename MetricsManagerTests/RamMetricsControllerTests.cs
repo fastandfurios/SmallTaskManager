@@ -12,7 +12,7 @@ namespace MetricsManagerTests
 
 		public RamMetricsControllerTests()
 		{
-			_controller = new RamMetricsController();
+			
 		}
 
 		[Fact]

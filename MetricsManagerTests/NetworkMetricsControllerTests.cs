@@ -12,7 +12,7 @@ namespace MetricsManagerTests
 
 		public NetworkMetricsControllerTests()
 		{
-			_controller = new NetworkMetricsController();
+			
 		}
 
 		[Fact]

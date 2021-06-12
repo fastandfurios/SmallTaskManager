@@ -9,7 +9,7 @@ namespace MetricsAgentTests
     {
 	    private readonly RamMetricsController _controller;
 
-	    public RamMetricsControllerTests() => _controller = new RamMetricsController();
+	    public RamMetricsControllerTests(){}
 
 		[Fact]
 		public void GetMetricsFromAgent_ReturnsOk()

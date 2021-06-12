@@ -9,7 +9,10 @@ namespace MetricsAgentTests
 	{
 		private readonly CpuMetricsController _controller;
 
-		public CpuMetricsControllerTests() => _controller = new CpuMetricsController();
+		public CpuMetricsControllerTests()
+		{
+		}
+		
 
 		[Fact]
 		public void GetMetricsFromAgent_ReturnsOk()
