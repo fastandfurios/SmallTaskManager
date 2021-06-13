@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SmallTaskManager
+namespace MetricsAgent
 {
 	public class Program
 	{
