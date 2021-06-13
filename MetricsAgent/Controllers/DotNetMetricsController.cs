@@ -20,7 +20,7 @@ namespace MetricsAgent.Controllers
 		}
 
 		[HttpGet("dotnet/errors-count/from/{fromTime}/to/{toTime}")]
-		public IActionResult GetMetricsFromAgent([FromRoute] TimeSpan fromTime, [FromRoute] TimeSpan toTime)
+		public IActionResult GetMetricsFromAgent([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
 		{
 			_logger.LogInformation($"from: {fromTime} to {toTime}");
 			return Ok();

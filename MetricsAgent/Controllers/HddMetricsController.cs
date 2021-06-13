@@ -20,9 +20,9 @@ namespace MetricsAgent.Controllers
 		}
 
 		[HttpGet("hdd/left/{freeSpace}")]
-		public IActionResult GetMetricsFromAgent([FromRoute] long freeSpace)
+		public IActionResult GetMetricsFromAgent([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
 		{
-			_logger.LogInformation($"freeSpace: {freeSpace}");
+			_logger.LogInformation($"fromTime {fromTime} toTime {toTime}");
 			return Ok();
 		}
 	}

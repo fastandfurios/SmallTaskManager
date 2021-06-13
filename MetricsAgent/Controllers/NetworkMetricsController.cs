@@ -20,8 +20,9 @@ namespace MetricsAgent.Controllers
 		}
 
 		[HttpGet("network/from/{fromTime}/to/{toTime}")]
-		public IActionResult GetMetricsFromAgent([FromRoute] TimeSpan fromTime, [FromRoute] TimeSpan toTime)
+		public IActionResult GetMetricsFromAgent([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
 		{
+			_logger.LogInformation($"fromTime {fromTime} toTime {toTime}");
 			return Ok();
 		}
 	}
