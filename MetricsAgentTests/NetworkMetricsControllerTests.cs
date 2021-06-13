@@ -14,8 +14,8 @@ namespace MetricsAgentTests
 		[Fact]
 		public void GetMetricsFromAgent_ReturnsOk()
 		{
-			var fromTime = TimeSpan.FromSeconds(0);
-			var toTime = TimeSpan.FromSeconds(150);
+			var fromTime = DateTimeOffset.FromUnixTimeSeconds(0);
+			var toTime = DateTimeOffset.FromUnixTimeSeconds(100);
 
 			var result = _controller.GetMetricsFromAgent(fromTime, toTime);
 

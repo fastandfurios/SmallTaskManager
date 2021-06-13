@@ -11,8 +11,8 @@ namespace MetricsAgent.Controllers
 	[ApiController]
 	public class RamMetricsController : ControllerBase
 	{
-		[HttpGet("ram/available/{freeSpace}")]
-		public IActionResult GetMetricsFromAgent([FromRoute] long freeSpace)
+		[HttpGet("ram/available/from/{fromTime}/to/{toTime}")]
+		public IActionResult GetMetricsFromAgent([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
 		{
 			return Ok();
 		}

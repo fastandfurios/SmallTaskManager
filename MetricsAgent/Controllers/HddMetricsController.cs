@@ -11,8 +11,8 @@ namespace MetricsAgent.Controllers
 	[ApiController]
 	public class HddMetricsController : ControllerBase
 	{
-		[HttpGet("hdd/left/{freeSpace}")]
-		public IActionResult GetMetricsFromAgent([FromRoute] long freeSpace)
+		[HttpGet("hdd/left/from/{fromTime}/to/{toTime}")]
+		public IActionResult GetMetricsFromAgent([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
 		{
 			return Ok();
 		}

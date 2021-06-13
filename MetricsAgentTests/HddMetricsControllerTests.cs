@@ -14,9 +14,10 @@ namespace MetricsAgentTests
 		[Fact]
 		public void GetMetricsFromAgent_ReturnsOk()
 		{
-			var freeSpace = 5000000;
+			var fromTime = DateTimeOffset.FromUnixTimeSeconds(0);
+			var toTime = DateTimeOffset.FromUnixTimeSeconds(100);
 
-			var result = _controller.GetMetricsFromAgent(freeSpace);
+			var result = _controller.GetMetricsFromAgent(fromTime, toTime);
 
 			_ = Assert.IsAssignableFrom<IActionResult>(result);
 		}
