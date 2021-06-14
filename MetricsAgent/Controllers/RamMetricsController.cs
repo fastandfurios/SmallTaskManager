@@ -24,7 +24,7 @@ namespace MetricsAgent.Controllers
 			_repository = repository;
 		}
 
-		[HttpGet("ram/available/{freeSpace}")]
+		[HttpGet("ram/available/from/{fromTime}/to/{toTime}")]
 		public IActionResult GetMetricsFromAgent([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
 		{
 			_logger.LogInformation($"fromTime {fromTime} toTime {toTime}");

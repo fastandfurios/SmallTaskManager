@@ -51,6 +51,5 @@ namespace MetricsManager.Controllers
 			}
 			return Ok(_agents.ListAgents);
 		}
-
 	}
 }

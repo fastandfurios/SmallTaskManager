@@ -16,15 +16,17 @@ namespace MetricsAgent.Controllers
 	[ApiController]
 	public class HddMetricsController : ControllerBase
 	{
-		private readonly ILogger<HddMetricsController> _logger;
-		private readonly IHddMetricsRepository _repository;
-		public HddMetricsController(ILogger<HddMetricsController> logger, IHddMetricsRepository repository)
+
+	  private readonly ILogger<HddMetricsController> _logger;
+	  private readonly IHddMetricsRepository _repository;
+  
+	  public HddMetricsController(ILogger<HddMetricsController> logger, IHddMetricsRepository repository)
 		{
 			_logger = logger;
 			_repository = repository;
 		}
 
-		[HttpGet("hdd/left/{freeSpace}")]
+		[HttpGet("hdd/left/from/{fromTime}/to/{toTime}"
 		public IActionResult GetMetricsFromAgent([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
 		{
 			_logger.LogInformation($"fromTime {fromTime} toTime {toTime}");
