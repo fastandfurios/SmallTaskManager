@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MetricsAgent.Repositories.NetworkMetricsRepository;
+using MetricsAgent.Responses;
+using MetricsAgent.Responses.DTO;
 using Microsoft.Extensions.Logging;
 
 namespace MetricsAgent.Controllers
@@ -25,6 +27,24 @@ namespace MetricsAgent.Controllers
 		public IActionResult GetMetricsFromAgent([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
 		{
 			_logger.LogInformation($"fromTime {fromTime} toTime {toTime}");
+
+			var metrics = _repository.GetByTimePeriod(fromTime, toTime);
+
+			var response = new NetworkMetricResponse()
+			{
+				Metrics = new List<NetworkMetricDto>()
+			};
+
+			foreach (var metric in metrics)
+			{
+				response.Metrics.Add(new NetworkMetricDto()
+				{
+					Id = metric.Id,
+					Value = metric.Value,
+					Time = metric.Time
+				});
+			}
+
 			return Ok();
 		}
 	}
