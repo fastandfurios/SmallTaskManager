@@ -26,7 +26,7 @@ namespace MetricsAgent.Controllers
 			_repository = repository;
 		}
 
-		[HttpGet("hdd/left/from/{fromTime}/to/{toTime}"
+		[HttpGet("hdd/left/from/{fromTime}/to/{toTime}")]
 		public IActionResult GetMetricsFromAgent([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
 		{
 			_logger.LogInformation($"fromTime {fromTime} toTime {toTime}");
