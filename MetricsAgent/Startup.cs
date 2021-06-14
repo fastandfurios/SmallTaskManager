@@ -14,6 +14,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using MetricsAgent.Controllers;
 using MetricsAgent.Repositories.CpuMetricsRepository;
+using MetricsAgent.Repositories.DotNetMetricsRepository;
+using MetricsAgent.Repositories.HddMetricsRepository;
+using MetricsAgent.Repositories.NetworkMetricsRepository;
+using MetricsAgent.Repositories.RamMetricsRepository;
 
 namespace MetricsAgent
 {
@@ -32,11 +36,10 @@ namespace MetricsAgent
 			services.AddControllers();
 			ConfigureSqlLiteConnection();
 			services.AddSingleton<ICpuMetricsRepository, CpuMetricsRepository>();
-
-			services.AddSingleton<DotNetMetricsController>();
-			services.AddSingleton<HddMetricsController>();
-			services.AddSingleton<NetworkMetricsController>();
-			services.AddSingleton<RamMetricsController>();
+			services.AddSingleton<IDotNetMetricsRepository, DotNetMetricsRepository>();
+			services.AddSingleton<IHddMetricsRepository, HddMetricsRepository>();
+			services.AddSingleton<INetworkMetricsRepository, NetworkMetricsRepository>();
+			services.AddSingleton<IRamMetricsRepository, RamMetricsRepository>();
 		}
 
 		private void ConfigureSqlLiteConnection()

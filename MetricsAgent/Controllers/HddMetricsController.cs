@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MetricsAgent.Repositories.HddMetricsRepository;
 using Microsoft.Extensions.Logging;
 
 namespace MetricsAgent.Controllers
@@ -13,10 +14,11 @@ namespace MetricsAgent.Controllers
 	public class HddMetricsController : ControllerBase
 	{
 		private readonly ILogger<HddMetricsController> _logger;
-
-		public HddMetricsController(ILogger<HddMetricsController> logger)
+		private readonly IHddMetricsRepository _repository;
+		public HddMetricsController(ILogger<HddMetricsController> logger, IHddMetricsRepository repository)
 		{
 			_logger = logger;
+			_repository = repository;
 		}
 
 		[HttpGet("hdd/left/{freeSpace}")]

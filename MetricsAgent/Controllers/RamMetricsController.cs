@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MetricsAgent.Repositories.RamMetricsRepository;
 using Microsoft.Extensions.Logging;
 
 namespace MetricsAgent.Controllers
@@ -13,10 +14,12 @@ namespace MetricsAgent.Controllers
 	public class RamMetricsController : ControllerBase
 	{
 		private readonly ILogger<RamMetricsController> _logger;
+		private readonly IRamMetricsRepository _repository;
 
-		public RamMetricsController(ILogger<RamMetricsController> logger)
+		public RamMetricsController(ILogger<RamMetricsController> logger, IRamMetricsRepository repository)
 		{
 			_logger = logger;
+			_repository = repository;
 		}
 
 		[HttpGet("ram/available/{freeSpace}")]

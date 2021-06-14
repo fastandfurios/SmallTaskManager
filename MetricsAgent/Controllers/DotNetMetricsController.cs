@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MetricsAgent.Repositories.DotNetMetricsRepository;
 using Microsoft.Extensions.Logging;
 
 namespace MetricsAgent.Controllers
@@ -13,10 +14,12 @@ namespace MetricsAgent.Controllers
 	public class DotNetMetricsController : ControllerBase
 	{
 		private readonly ILogger<DotNetMetricsController> _logger;
+		private readonly IDotNetMetricsRepository _repository;
 
-		public DotNetMetricsController(ILogger<DotNetMetricsController> logger)
+		public DotNetMetricsController(ILogger<DotNetMetricsController> logger, IDotNetMetricsRepository repository)
 		{
 			_logger = logger;
+			_repository = repository;
 		}
 
 		[HttpGet("dotnet/errors-count/from/{fromTime}/to/{toTime}")]
