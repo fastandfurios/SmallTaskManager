@@ -15,15 +15,10 @@ namespace MetricsManager.Controllers
 		private readonly Agents _agents;
 		private readonly ILogger<AgentsController> _logger;
 
-		public AgentsController()
-		{
-		}
-
-		public AgentsController(Agents agents) => _agents = agents;
-
 		public AgentsController(ILogger<AgentsController> logger)
 		{
 			_logger = logger;
+			_agents = new Agents();
 		}
 
 		[HttpPost("register")]

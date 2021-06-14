@@ -19,8 +19,8 @@ namespace MetricsManagerTests
 	    public void GetMetricsFromAgent_ResultOk()
 	    {
 		    var agentId = 1;
-		    var fromTime = TimeSpan.FromSeconds(0);
-		    var toTime = TimeSpan.FromSeconds(100);
+		    var fromTime = DateTimeOffset.FromUnixTimeSeconds(0);
+		    var toTime = DateTimeOffset.FromUnixTimeSeconds(100);
 
 		    var result = _controller.GetMetricsFromAgent(agentId, fromTime, toTime);
 
@@ -30,10 +30,10 @@ namespace MetricsManagerTests
 	    [Fact]
 	    public void GetMetricsFromAllCluster_ResultOk()
 	    {
-		    var fromTime = TimeSpan.FromSeconds(1);
-		    var toTime = TimeSpan.FromSeconds(50);
+			var fromTime = DateTimeOffset.FromUnixTimeSeconds(0);
+			var toTime = DateTimeOffset.FromUnixTimeSeconds(100);
 
-		    var result = _controller.GetMetricsFromAllCluster(fromTime, toTime);
+			var result = _controller.GetMetricsFromAllCluster(fromTime, toTime);
 
 		    _ = Assert.IsAssignableFrom<IActionResult>(result);
 		}
