@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using MetricsAgent.Controllers;
+using MetricsAgent.Models;
 using MetricsAgent.Repositories.DotNetMetricsRepository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -27,9 +29,11 @@ namespace MetricsAgentTests
 		    var fromTime = DateTimeOffset.FromUnixTimeSeconds(0);
 		    var toTime = DateTimeOffset.FromUnixTimeSeconds(100);
 
-		    _mock.Setup(r => r.GetByTimePeriod(fromTime, toTime)).Verifiable();
+		    _mock.Setup(r => r.GetByTimePeriod(fromTime, toTime)).Returns(new List<DotNetMetric>());
 
-		    _mock.Verify(r => r.GetByTimePeriod(fromTime, toTime), Times.AtMostOnce());
+		    var result = _controller.GetMetricsFromAgent(fromTime, toTime);
+
+			_mock.Verify(r => r.GetByTimePeriod(fromTime, toTime), Times.AtMostOnce());
 	    }
 	}
 }
