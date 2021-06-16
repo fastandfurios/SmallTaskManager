@@ -28,6 +28,9 @@ namespace MetricsAgent.Controllers
 		[HttpGet("cpu/from/{fromTime}/to/{toTime}")]
 		public IActionResult GetMetricsFromAgent([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
 		{
+			fromTime = fromTime.UtcDateTime;
+			toTime = toTime.UtcDateTime;
+
 			_logger.LogInformation($"from: {fromTime} to: {toTime}");
 
 			var metrics = _repository.GetByTimePeriod(fromTime, toTime);
