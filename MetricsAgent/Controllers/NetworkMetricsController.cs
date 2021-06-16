@@ -48,7 +48,7 @@ namespace MetricsAgent.Controllers
 				});
 			}
 
-			return Ok();
+			return Ok(response);
 		}
 	}
 }
