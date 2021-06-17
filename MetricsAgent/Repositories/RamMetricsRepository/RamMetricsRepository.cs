@@ -23,7 +23,7 @@ namespace MetricsAgent.Repositories.RamMetricsRepository
 			connection.Open();
 
 			using var command = new SQLiteCommand(connection);
-			command.CommandText = "SELECT * FROM cpumetrics";
+			command.CommandText = "SELECT * FROM rammetrics";
 
 			var result = new List<RamMetric>();
 

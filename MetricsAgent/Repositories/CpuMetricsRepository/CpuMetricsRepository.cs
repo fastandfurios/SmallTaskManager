@@ -33,7 +33,9 @@ namespace MetricsAgent.Repositories.CpuMetricsRepository
 
 			using var command = new SQLiteCommand(connection);
 			command.CommandText = "SELECT * FROM cpumetrics";
-
+			//TODO добавить это строку для выборки периода, когда появится возможность создать таблицу базы данных со значениями (fromTime,toTime)
+			//command.CommandText = "SELECT * FROM cpumetrics WHERE @fromTime <= time AND @toTime <= time";
+			
 			var result = new List<CpuMetric>();
 
 			using (SQLiteDataReader reader = command.ExecuteReader())

@@ -24,7 +24,7 @@ namespace MetricsAgent.Repositories.DotNetMetricsRepository
 			connection.Open();
 
 			using var command = new SQLiteCommand(connection);
-			command.CommandText = "SELECT * FROM cpumetrics";
+			command.CommandText = "SELECT * FROM dotnetmetrics";
 
 			var result = new List<DotNetMetric>();
 

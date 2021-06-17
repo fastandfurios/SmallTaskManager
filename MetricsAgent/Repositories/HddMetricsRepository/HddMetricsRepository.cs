@@ -23,7 +23,7 @@ namespace MetricsAgent.Repositories.HddMetricsRepository
 			connection.Open();
 
 			using var command = new SQLiteCommand(connection);
-			command.CommandText = "SELECT * FROM cpumetrics";
+			command.CommandText = "SELECT * FROM hddmetrics";
 
 			var result = new List<HddMetric>();
 
