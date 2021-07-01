@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MetricsManager.Controllers;
 
 namespace MetricsManager
 {
@@ -29,6 +30,11 @@ namespace MetricsManager
 
 			services.AddControllers();
 			services.AddSingleton<Agents>();
+			services.AddSingleton<CpuMetricsController>();
+			services.AddSingleton<DotNetMetricsController>();
+			services.AddSingleton<HddMetricsController>();
+			services.AddSingleton<NetworkMetricsController>();
+			services.AddSingleton<RamMetricsController>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
