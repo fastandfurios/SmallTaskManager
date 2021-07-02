@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AutoMapper;
 using MetricsAgent.Controllers;
 using MetricsAgent.Models;
 using MetricsAgent.Repositories.HddMetricsRepository;
@@ -15,12 +16,13 @@ namespace MetricsAgentTests
 	    private readonly HddMetricsController _controller;
 	    private readonly Mock<ILogger<HddMetricsController>> _mockLogger;
 	    private readonly Mock<IHddMetricsRepository> _mock;
+	    private readonly Mock<IMapper> _mockMapper;
 
 	    public HddMetricsControllerTests()
 	    {
 		    _mock = new Mock<IHddMetricsRepository>();
 		    _mockLogger = new Mock<ILogger<HddMetricsController>>();
-		    _controller = new HddMetricsController(_mockLogger.Object, _mock.Object);
+		    _controller = new HddMetricsController(_mockLogger.Object, _mock.Object, _mockMapper.Object);
 	    }
 
 	    [Fact]

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using MetricsAgent.Models;
 using MetricsAgent.Repositories.CpuMetricsRepository;
 using MetricsAgent.Responses;
@@ -18,11 +19,15 @@ namespace MetricsAgent.Controllers
 	{
 		private readonly ILogger<CpuMetricsController> _logger;
 		private readonly ICpuMetricsRepository _repository;
+		private readonly IMapper _mapper;
 
-		public CpuMetricsController(ILogger<CpuMetricsController> logger, ICpuMetricsRepository repository)
+		public CpuMetricsController(ILogger<CpuMetricsController> logger,
+									ICpuMetricsRepository repository,
+									IMapper mapper)
 		{
 			_logger = logger;
 			_repository = repository;
+			_mapper = mapper;
 		}
 
 		[HttpGet("cpu/from/{fromTime}/to/{toTime}")]
@@ -42,12 +47,7 @@ namespace MetricsAgent.Controllers
 
 			foreach (var metric in metrics)
 			{
-				response.Metrics.Add(new CpuMetricDto
-				{
-					Id = metric.Id,
-					Value = metric.Value,
-					Time = metric.Time
-				});
+				response.Metrics.Add(_mapper.Map<CpuMetricDto>(metric));
 			}
 
 			return Ok(response);

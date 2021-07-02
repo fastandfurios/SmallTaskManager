@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using MetricsAgent.Repositories.DotNetMetricsRepository;
 using MetricsAgent.Responses;
 using MetricsAgent.Responses.DTO;
@@ -17,18 +18,22 @@ namespace MetricsAgent.Controllers
 	{
 		private readonly ILogger<DotNetMetricsController> _logger;
 		private readonly IDotNetMetricsRepository _repository;
+		private readonly IMapper _mapper;
 
-		public DotNetMetricsController(ILogger<DotNetMetricsController> logger, IDotNetMetricsRepository repository)
+		public DotNetMetricsController(ILogger<DotNetMetricsController> logger,
+			IDotNetMetricsRepository repository, 
+			IMapper mapper)
 		{
 			_logger = logger;
 			_repository = repository;
+			_mapper = mapper;
 		}
 
 		[HttpGet("dotnet/errors-count/from/{fromTime}/to/{toTime}")]
 		public IActionResult GetMetricsFromAgent([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
 		{
-			fromTime = fromTime.UtcDateTime;
-			toTime = toTime.UtcDateTime;
+			fromTime = new DateTimeOffset(fromTime.UtcDateTime);
+			toTime = new DateTimeOffset(toTime.UtcDateTime);
 
 			_logger.LogInformation($"from: {fromTime} to {toTime}");
 
@@ -41,12 +46,7 @@ namespace MetricsAgent.Controllers
 
 			foreach (var metric in metrics)
 			{
-				response.Metrics.Add(new DotNetMetricDto()
-				{
-					Id = metric.Id,
-					Value = metric.Value,
-					Time = metric.Time
-				});
+				response.Metrics.Add(_mapper.Map<DotNetMetricDto>(metric));
 			}
 
 			return Ok(response);

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using MetricsAgent.Repositories.RamMetricsRepository;
 using MetricsAgent.Responses;
 using MetricsAgent.Responses.DTO;
@@ -17,18 +18,22 @@ namespace MetricsAgent.Controllers
 	{
 		private readonly ILogger<RamMetricsController> _logger;
 		private readonly IRamMetricsRepository _repository;
+		private readonly IMapper _mapper;
 
-		public RamMetricsController(ILogger<RamMetricsController> logger, IRamMetricsRepository repository)
+		public RamMetricsController(ILogger<RamMetricsController> logger,
+			IRamMetricsRepository repository,
+			IMapper mapper)
 		{
 			_logger = logger;
 			_repository = repository;
+			_mapper = mapper;
 		}
 
 		[HttpGet("ram/available/from/{fromTime}/to/{toTime}")]
 		public IActionResult GetMetricsFromAgent([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
 		{
-			fromTime = fromTime.UtcDateTime;
-			toTime = toTime.UtcDateTime;
+			fromTime = new DateTimeOffset(fromTime.UtcDateTime);
+			toTime = new DateTimeOffset(toTime.UtcDateTime);
 
 			_logger.LogInformation($"fromTime {fromTime} toTime {toTime}");
 
@@ -41,12 +46,7 @@ namespace MetricsAgent.Controllers
 
 			foreach (var metric in metrics)
 			{
-				response.Metrics.Add(new RamMetricDto()
-				{
-					Id = metric.Id,
-					Value = metric.Value,
-					Time = metric.Time
-				});
+				response.Metrics.Add(_mapper.Map<RamMetricDto>(metric));
 			}
 
 			return Ok(response);

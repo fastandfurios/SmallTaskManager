@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using MetricsAgent.Models;
 using MetricsAgent.Repositories.HddMetricsRepository;
 using MetricsAgent.Responses;
@@ -19,18 +20,22 @@ namespace MetricsAgent.Controllers
 
 	  private readonly ILogger<HddMetricsController> _logger;
 	  private readonly IHddMetricsRepository _repository;
+	  private readonly IMapper _mapper;
   
-	  public HddMetricsController(ILogger<HddMetricsController> logger, IHddMetricsRepository repository)
+	  public HddMetricsController(ILogger<HddMetricsController> logger,
+		  IHddMetricsRepository repository,
+		  IMapper mapper)
 		{
 			_logger = logger;
 			_repository = repository;
+			_mapper = mapper;
 		}
 
 		[HttpGet("hdd/left/from/{fromTime}/to/{toTime}")]
 		public IActionResult GetMetricsFromAgent([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
 		{
-			fromTime = fromTime.UtcDateTime;
-			toTime = toTime.UtcDateTime;
+			fromTime = new DateTimeOffset(fromTime.UtcDateTime);
+			toTime = new DateTimeOffset(toTime.UtcDateTime);
 
 			_logger.LogInformation($"fromTime {fromTime} toTime {toTime}");
 
@@ -43,12 +48,7 @@ namespace MetricsAgent.Controllers
 
 			foreach (var metric in metrics)
 			{
-				response.Metrics.Add(new HddMetricDto()
-				{
-					Id = metric.Id,
-					Value = metric.Value,
-					Time = metric.Time
-				});
+				response.Metrics.Add(_mapper.Map<HddMetricDto>(metric));
 			}
 
 			return Ok(response);

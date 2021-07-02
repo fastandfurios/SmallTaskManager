@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MetricsAgent.Repositories.Connection
 {
-    public class Connection : IConnection
+    internal class Connection : IConnection
     {
 	    private readonly string _connectionString = "Data Source=metrics.db;Version=3;Pooling=true;Max Pool Size=100;";
 
