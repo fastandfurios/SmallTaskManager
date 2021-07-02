@@ -13,6 +13,7 @@ using System.Data.SQLite;
 using System.Linq;
 using System.Threading.Tasks;
 using MetricsAgent.Controllers;
+using MetricsAgent.Repositories.Connection;
 using MetricsAgent.Repositories.CpuMetricsRepository;
 using MetricsAgent.Repositories.DotNetMetricsRepository;
 using MetricsAgent.Repositories.HddMetricsRepository;
@@ -40,6 +41,7 @@ namespace MetricsAgent
 			services.AddSingleton<IHddMetricsRepository, HddMetricsRepository>();
 			services.AddSingleton<INetworkMetricsRepository, NetworkMetricsRepository>();
 			services.AddSingleton<IRamMetricsRepository, RamMetricsRepository>();
+			services.AddSingleton<IConnection, Connection>();
 		}
 
 		private void ConfigureSqlLiteConnection()
