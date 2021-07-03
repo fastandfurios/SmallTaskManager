@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using AutoMapper;
 using MetricsAgent.Controllers;
-using MetricsAgent.Models;
-using MetricsAgent.Repositories.NetworkMetricsRepository;
+using MetricsAgent.DAL.Interfaces;
+using MetricsAgent.DAL.Models;
+using MetricsAgent.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;

@@ -6,10 +6,12 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Dapper;
-using MetricsAgent.Models;
+using MetricsAgent.DAL.Interfaces;
+using MetricsAgent.DAL.Models;
+using MetricsAgent.Repositories;
 using MetricsAgent.Repositories.Connection;
 
-namespace MetricsAgent.Repositories.CpuMetricsRepository
+namespace MetricsAgent.DAL.Repositories
 {
     public class CpuMetricsRepository : ICpuMetricsRepository
     {

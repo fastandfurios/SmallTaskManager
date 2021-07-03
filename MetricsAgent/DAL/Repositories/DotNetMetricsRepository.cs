@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
-using MetricsAgent.Models;
+using MetricsAgent.DAL.Interfaces;
+using MetricsAgent.DAL.Models;
 using MetricsAgent.Repositories.Connection;
 using MetricsAgent.Responses.DTO;
 
-namespace MetricsAgent.Repositories.DotNetMetricsRepository
+namespace MetricsAgent.DAL.Repositories
 {
     public class DotNetMetricsRepository : IDotNetMetricsRepository
     {

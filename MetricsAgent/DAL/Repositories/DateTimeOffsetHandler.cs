@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Dapper;
 
-namespace MetricsAgent.Repositories
+namespace MetricsAgent.DAL.Repositories
 {
     public class DateTimeOffsetHandler : SqlMapper.TypeHandler<DateTimeOffset>
     {

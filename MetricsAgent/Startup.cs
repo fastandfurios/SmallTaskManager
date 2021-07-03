@@ -14,12 +14,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using MetricsAgent.Controllers;
+using MetricsAgent.DAL.Interfaces;
+using MetricsAgent.DAL.Repositories;
 using MetricsAgent.Repositories.Connection;
-using MetricsAgent.Repositories.CpuMetricsRepository;
-using MetricsAgent.Repositories.DotNetMetricsRepository;
-using MetricsAgent.Repositories.HddMetricsRepository;
-using MetricsAgent.Repositories.NetworkMetricsRepository;
-using MetricsAgent.Repositories.RamMetricsRepository;
+using MetricsAgent.Repositories;
 
 namespace MetricsAgent
 {

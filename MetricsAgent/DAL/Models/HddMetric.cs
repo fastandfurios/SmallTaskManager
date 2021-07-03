@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MetricsAgent.Models
+namespace MetricsAgent.DAL.Models
 {
     public class HddMetric
     {

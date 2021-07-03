@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MetricsAgent.Models
+namespace MetricsAgent.DAL.Models
 {
-    public class NetworkMetric
+    public class DotNetMetric
     {
 	    public int Id { get; set; }
 	    public int Value { get; set; }

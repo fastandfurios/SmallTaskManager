@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
-using MetricsAgent.Models;
+using MetricsAgent.DAL.Models;
 using MetricsAgent.Responses.DTO;
 
 namespace MetricsAgent

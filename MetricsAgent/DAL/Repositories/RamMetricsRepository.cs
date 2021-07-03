@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
-using MetricsAgent.Models;
+using MetricsAgent.DAL.Interfaces;
+using MetricsAgent.DAL.Models;
 using MetricsAgent.Repositories.Connection;
 
-namespace MetricsAgent.Repositories.RamMetricsRepository
+namespace MetricsAgent.DAL.Repositories
 {
     public class RamMetricsRepository : IRamMetricsRepository
     {
