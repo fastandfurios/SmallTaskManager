@@ -6,7 +6,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using MetricsAgent.DAL.Interfaces;
-using MetricsAgent.Repositories;
 using MetricsAgent.Responses;
 using MetricsAgent.Responses.DTO;
 using Microsoft.Extensions.Logging;

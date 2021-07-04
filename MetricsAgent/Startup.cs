@@ -13,11 +13,9 @@ using System.Data.SQLite;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using MetricsAgent.Controllers;
 using MetricsAgent.DAL.Interfaces;
 using MetricsAgent.DAL.Repositories;
-using MetricsAgent.Repositories.Connection;
-using MetricsAgent.Repositories;
+using MetricsAgent.DAL.Repositories.Connection;
 
 namespace MetricsAgent
 {

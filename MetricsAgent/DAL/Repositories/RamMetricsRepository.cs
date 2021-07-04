@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Dapper;
 using MetricsAgent.DAL.Interfaces;
 using MetricsAgent.DAL.Models;
-using MetricsAgent.Repositories.Connection;
+using MetricsAgent.DAL.Repositories.Connection;
 
 namespace MetricsAgent.DAL.Repositories
 {
@@ -23,7 +23,7 @@ namespace MetricsAgent.DAL.Repositories
 
 	    public IList<RamMetric> GetByTimePeriod(DateTimeOffset fromTime, DateTimeOffset toTime)
 	    {
-			using (var connection = new SQLiteConnection(_connection.GetOpenedConnection())) 
+		    using var connection = _connection.GetOpenedConnection();
 				
 				return connection.Query<RamMetric>("SELECT * FROM rammetrics")
 					.Where(w => w.Time.Second >= fromTime.Second && w.Time.Second <= toTime.Second)

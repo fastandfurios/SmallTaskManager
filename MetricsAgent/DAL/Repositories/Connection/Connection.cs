@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MetricsAgent.Repositories.Connection
+namespace MetricsAgent.DAL.Repositories.Connection
 {
     internal class Connection : IConnection
     {
