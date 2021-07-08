@@ -21,12 +21,16 @@ namespace MetricsAgent.DAL.Repositories
 		    SqlMapper.AddTypeHandler(new DateTimeOffsetHandler());
 	    }
 
+	    public void Create(RamMetric item)
+	    {
+		    throw new NotImplementedException();
+	    }
+
 	    public IList<RamMetric> GetByTimePeriod(DateTimeOffset fromTime, DateTimeOffset toTime)
 	    {
 		    using var connection = _connection.GetOpenedConnection();
 				
 				return connection.Query<RamMetric>("SELECT * FROM rammetrics")
-					.Where(w => w.Time.Second >= fromTime.Second && w.Time.Second <= toTime.Second)
 					.ToList();
 	    }
     }

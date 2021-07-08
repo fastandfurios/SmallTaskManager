@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Core.Interfaces
 {
-    public interface IRepository<T> where T : class 
+    public interface IRepository<T> where T : class
     {
+	    void Create(T item);
 	    IList<T> GetByTimePeriod(DateTimeOffset fromTime, DateTimeOffset toTime);
     }
 }

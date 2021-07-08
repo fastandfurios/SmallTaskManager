@@ -16,6 +16,12 @@ using FluentMigrator.Runner;
 using MetricsAgent.DAL.Interfaces;
 using MetricsAgent.DAL.Repositories;
 using MetricsAgent.DAL.Repositories.Connection;
+using MetricsAgent.Jobs;
+using MetricsAgent.QuartzService;
+using MetricsAgent.Responses.DTO;
+using Quartz;
+using Quartz.Impl;
+using Quartz.Spi;
 
 namespace MetricsAgent
 {
@@ -49,6 +55,15 @@ namespace MetricsAgent
 					.WithGlobalConnectionString(ConnectionString)
 					.ScanIn(typeof(Startup).Assembly).For.Migrations())
 				.AddLogging(lb => lb.AddFluentMigratorConsole());
+
+			services.AddSingleton<IJobFactory, SingletonJobFactory>();
+			services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
+			services.AddSingleton<CpuMetricJob>();
+			services.AddSingleton(new JobSchedule(
+				jobType: typeof(CpuMetricJob),
+				cronExpression: "0/5 * * * * ?"));
+
+			services.AddHostedService<QuartzHostedService>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

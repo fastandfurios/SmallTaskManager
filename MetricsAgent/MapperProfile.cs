@@ -13,8 +13,12 @@ namespace MetricsAgent
     {
 	    public MapperProfile()
 	    {
-		    CreateMap<CpuMetric, CpuMetricDto>();
-		    CreateMap<DotNetMetric, DotNetMetricDto>();
+		    CreateMap<CpuMetric, CpuMetricDto>()
+			    .ForMember(dest => dest.Time,
+				    act => act.MapFrom(src => DateTimeOffset.FromUnixTimeSeconds(src.Time)));
+		    CreateMap<DotNetMetric, DotNetMetricDto>()
+			    .ForMember(dest => dest.Time,
+				    act => act.MapFrom(src => DateTimeOffset.FromUnixTimeSeconds(src.Time)));
 		    CreateMap<HddMetric, HddMetricDto>();
 		    CreateMap<NetworkMetric, NetworkMetricDto>();
 		    CreateMap<RamMetric, RamMetricDto>();
