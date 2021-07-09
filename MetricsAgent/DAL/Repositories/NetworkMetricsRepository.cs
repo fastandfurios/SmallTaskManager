@@ -23,15 +23,26 @@ namespace MetricsAgent.DAL.Repositories
 
 	    public void Create(NetworkMetric item)
 	    {
-		    throw new NotImplementedException();
-	    }
+			using var connection = _connection.GetOpenedConnection();
+
+			connection.Execute("INSERT INTO networkmetrics(value, time) VALUES(@value, @time)",
+				new
+				{
+					value = item.Value,
+					time = item.Time
+				});
+		}
 
 	    public IList<NetworkMetric> GetByTimePeriod(DateTimeOffset fromTime, DateTimeOffset toTime)
 	    {
-		    using var connection = _connection.GetOpenedConnection();
-			
-				return connection.Query<NetworkMetric>("SELECT * FROM networkmetrics")
-					.ToList();
-	    }
+			using var connection = _connection.GetOpenedConnection();
+
+			return connection.Query<NetworkMetric>("SELECT id, value, time FROM networkmetrics WHERE time>=@fromTime AND time<=@toTime",
+				new
+				{
+					fromTime = fromTime.ToUnixTimeSeconds(),
+					toTime = toTime.ToUnixTimeSeconds()
+				}).ToList();
+		}
     }
 }

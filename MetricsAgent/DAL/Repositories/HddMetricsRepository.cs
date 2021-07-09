@@ -23,15 +23,24 @@ namespace MetricsAgent.DAL.Repositories
 
 	    public void Create(HddMetric item)
 	    {
-		    throw new NotImplementedException();
-	    }
+			using var connection = _connection.GetOpenedConnection();
+
+			connection.Execute("INSERT INTO hddmetrics(value, time) VALUES(@value, @time)",
+				new
+				{
+					value = item.Value,
+					time = item.Time
+				});
+		}
 
 	    public IList<HddMetric> GetByTimePeriod(DateTimeOffset fromTime, DateTimeOffset toTime)
 	    {
 		    using var connection = _connection.GetOpenedConnection();
-			
-				return connection.Query<HddMetric>("SELECT * FROM hddmetrics")
-					.ToList();
+
+		    return connection
+			    .Query<HddMetric>("SELECT id, value, time FROM hddmetrics WHERE time>=@fromTime AND time<=@toTime",
+				    new {fromTime = fromTime.ToUnixTimeSeconds(), toTime = toTime.ToUnixTimeSeconds()})
+			    .ToList();
 	    }
     }
 }
