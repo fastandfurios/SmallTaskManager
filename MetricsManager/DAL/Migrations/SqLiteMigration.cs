@@ -7,7 +7,8 @@ using FluentMigrator;
 
 namespace MetricsManager.DAL.Migrations
 {
-    public class SqLiteMigration : Migration
+	[Migration(1)]
+	public class SqLiteMigration : Migration
     {
 	    public int Id { get; set; }
 	    public int Value { get; set; }
@@ -19,31 +20,31 @@ namespace MetricsManager.DAL.Migrations
 	    {
 		    Create.Table("cpumetrics")
 			    .WithColumn(nameof(Id)).AsInt64().PrimaryKey().Identity()
-			    .WithColumn(nameof(AgentId)).AsInt64()
+			    .WithColumn(nameof(AgentId)).AsInt64().ForeignKey("agents","agentId")
 			    .WithColumn(nameof(Value)).AsInt32()
 			    .WithColumn(nameof(Time)).AsInt64();
 
 			Create.Table("dotnetmetrics")
 				.WithColumn(nameof(Id)).AsInt64().PrimaryKey().Identity()
-				.WithColumn(nameof(AgentId)).AsInt64()
+				.WithColumn(nameof(AgentId)).AsInt64().ForeignKey("agents", "agentId")
 				.WithColumn(nameof(Value)).AsInt32()
 				.WithColumn(nameof(Time)).AsInt64();
 
 			Create.Table("hddmetrics")
 				.WithColumn(nameof(Id)).AsInt64().PrimaryKey().Identity()
-				.WithColumn(nameof(AgentId)).AsInt64()
+				.WithColumn(nameof(AgentId)).AsInt64().ForeignKey("agents", "agentId")
 				.WithColumn(nameof(Value)).AsInt32()
 				.WithColumn(nameof(Time)).AsInt64();
 
 			Create.Table("networkmetrics")
 				.WithColumn(nameof(Id)).AsInt64().PrimaryKey().Identity()
-				.WithColumn(nameof(AgentId)).AsInt64()
+				.WithColumn(nameof(AgentId)).AsInt64().ForeignKey("agents", "agentId")
 				.WithColumn(nameof(Value)).AsInt32()
 				.WithColumn(nameof(Time)).AsInt64();
 
 			Create.Table("rammetrics")
 				.WithColumn(nameof(Id)).AsInt64().PrimaryKey().Identity()
-				.WithColumn(nameof(AgentId)).AsInt64()
+				.WithColumn(nameof(AgentId)).AsInt64().ForeignKey("agents", "agentId")
 				.WithColumn(nameof(Value)).AsInt32()
 				.WithColumn(nameof(Time)).AsInt64();
 

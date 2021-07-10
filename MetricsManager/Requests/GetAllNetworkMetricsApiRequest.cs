@@ -8,7 +8,7 @@ namespace MetricsManager.Requests
 {
     public class GetAllNetworkMetricsApiRequest
     {
-	    public Uri AgentUrl { get; set; }
+	    public Uri ClientBaseAddress { get; set; }
 	    public DateTimeOffset FromTime { get; set; }
 	    public DateTimeOffset ToTime { get; set; }
     }

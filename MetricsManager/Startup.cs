@@ -11,11 +11,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using FluentMigrator.Runner;
+using MetricsManager.Client;
 using MetricsManager.Controllers;
 using MetricsManager.DAL.Interfaces;
 using MetricsManager.DAL.Repositories;
+using MetricsManager.DAL.Repositories.Connection;
 using MetricsManager.Jobs;
+using Polly;
 using Quartz;
 using Quartz.Impl;
 using Quartz.Spi;
@@ -44,6 +48,11 @@ namespace MetricsManager
 			services.AddSingleton<INetworkMetricsRepository, NetworkMetricsRepository>();
 			services.AddSingleton<IRamMetricsRepository, RamMetricsRepository>();
 
+			services.AddSingleton<IConnection, Connection>();
+
+			var mapperConfiguration = new MapperConfiguration(mp => mp.AddProfile(new MapperProfile()));
+			services.AddSingleton(mapperConfiguration.CreateMapper());
+
 			services.AddFluentMigratorCore()
 				.ConfigureRunner(rb => rb.AddSQLite()
 					.WithGlobalConnectionString(ConnectionString)
@@ -53,7 +62,9 @@ namespace MetricsManager
 			services.AddSingleton<IJobFactory, SingletonJobFactory>();
 			services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
 
-			services.AddHttpClient();
+			services.AddHttpClient<IMetricsAgentClient, MetricsAgentClient>()
+				.AddTransientHttpErrorPolicy(p =>
+					p.WaitAndRetryAsync(3, _ => TimeSpan.FromMilliseconds(1000)));
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
