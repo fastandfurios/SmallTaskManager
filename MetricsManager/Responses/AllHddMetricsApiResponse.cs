@@ -7,8 +7,8 @@ using MetricsManager.Responses.DTO;
 
 namespace MetricsManager.Responses
 {
-    public class DotNetMetricResponse
+    public class AllHddMetricsApiResponse
     {
-	    public List<DotNetMetricDto> Metrics { get; set; }
+	    public List<HddMetricDto> Metrics { get; set; }
     }
 }

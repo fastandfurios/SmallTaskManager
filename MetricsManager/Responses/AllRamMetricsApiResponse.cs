@@ -7,8 +7,8 @@ using MetricsManager.Responses.DTO;
 
 namespace MetricsManager.Responses
 {
-    public class CpuMetricsResponse
+    public class AllRamMetricsApiResponse
     {
-	    public List<CpuMetricDto> Metrics { get; set; }
+	    public List<RamMetricDto> Metrics { get; set; }
     }
 }

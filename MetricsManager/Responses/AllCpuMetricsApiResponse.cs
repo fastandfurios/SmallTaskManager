@@ -7,8 +7,8 @@ using MetricsManager.Responses.DTO;
 
 namespace MetricsManager.Responses
 {
-    public class HddMetricResponse
+    public class AllCpuMetricsApiResponse
     {
-	    public List<HddMetricDto> Metrics { get; set; }
+	    public List<CpuMetricDto> Metrics { get; set; }
     }
 }
