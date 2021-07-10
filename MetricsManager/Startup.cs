@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MetricsManager.Controllers;
+using MetricsManager.DAL.Interfaces;
+using MetricsManager.DAL.Repositories;
 
 namespace MetricsManager
 {
@@ -29,12 +31,14 @@ namespace MetricsManager
 		{
 
 			services.AddControllers();
-			services.AddSingleton<Agents>();
-			services.AddSingleton<CpuMetricsController>();
-			services.AddSingleton<DotNetMetricsController>();
-			services.AddSingleton<HddMetricsController>();
-			services.AddSingleton<NetworkMetricsController>();
-			services.AddSingleton<RamMetricsController>();
+			services.AddSingleton<IAgentsRepository, AgentsRepository>();
+			services.AddSingleton<ICpuMetricsRepository, CpuMetricsRepository>();
+			services.AddSingleton<IDotNetMetricsRepository, DotNetMetricsRepository>();
+			services.AddSingleton<IHddMetricsRepository, HddMetricsRepository>();
+			services.AddSingleton<INetworkMetricsRepository, NetworkMetricsRepository>();
+			services.AddSingleton<IRamMetricsRepository, RamMetricsRepository>();
+
+
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
