@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using MetricsAgent.Responses.DTO;
+using MetricsAgent.Jobs;
 using Microsoft.Extensions.Hosting;
 using Quartz;
 using Quartz.Spi;
