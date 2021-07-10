@@ -15,6 +15,10 @@ using FluentMigrator.Runner;
 using MetricsManager.Controllers;
 using MetricsManager.DAL.Interfaces;
 using MetricsManager.DAL.Repositories;
+using MetricsManager.Jobs;
+using Quartz;
+using Quartz.Impl;
+using Quartz.Spi;
 
 namespace MetricsManager
 {
@@ -46,6 +50,8 @@ namespace MetricsManager
 					.ScanIn(typeof(Startup).Assembly).For.Migrations())
 				.AddLogging(lb => lb.AddFluentMigratorConsole());
 
+			services.AddSingleton<IJobFactory, SingletonJobFactory>();
+			services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
