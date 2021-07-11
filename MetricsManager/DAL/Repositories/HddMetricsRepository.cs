@@ -19,7 +19,6 @@ namespace MetricsManager.DAL.Repositories
 		    _connection = connection;
 	    }
 
-
 	    public void Create(HddMetric item)
 	    {
 		    using var connection = _connection.GetOpenedConnection();

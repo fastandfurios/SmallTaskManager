@@ -17,23 +17,43 @@ namespace MetricsManager.DAL.Repositories
 	    {
 		    _connection = connection;
 			SqlMapper.AddTypeHandler(new DateTimeOffsetHandler());
+			SqlMapper.AddTypeHandler(new UriHandler());
 	    }
 
 	    public void Create(Models.Agents item)
 	    {
 			using var connection = _connection.GetOpenedConnection();
 
-			connection.Execute("INSERT INTO agents(agentId, agentUrl) VALUES(@agentId, @agentUrl)",
+			connection.Execute("INSERT INTO agents(agentId, agentUrl, enabled) VALUES(@agentId, @agentUrl, @enabled)",
 				new
 				{
 					agentId = item.AgentId,
-					agentUrl = item.AgentUrl
+					agentUrl = item.AgentUrl,
+					enabled = item.Enabled
 				});
 		}
 
-	    public IList<Models.Agents> GetByTimePeriod(DateTimeOffset fromTime, DateTimeOffset toTime)
+	    public Models.Agents GetEnabledAgent(int agentId)
 	    {
-		    throw new NotImplementedException();
+		    using var connection = _connection.GetOpenedConnection();
+
+		    return connection.QuerySingle<Models.Agents>("SELECT * FROM agents WHERE agentId=@agentId",
+			    new{agentId = agentId});
+	    }
+
+	    public Models.Agents GetDisabledAgent(int agentId)
+	    {
+		    using var connection = _connection.GetOpenedConnection();
+
+		    return connection.QuerySingle<Models.Agents>("SELECT * FROM agents WHERE agentId=@agentId",
+			    new {agentId = agentId});
+	    }
+
+	    public IList<Models.Agents> GetRegisterObjects()
+	    {
+		    using var connection = _connection.GetOpenedConnection();
+
+		    return connection.Query<Models.Agents>("SELECT * FROM agents").ToList();
 	    }
     }
 }

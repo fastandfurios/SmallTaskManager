@@ -49,8 +49,9 @@ namespace MetricsManager.DAL.Migrations
 				.WithColumn(nameof(Time)).AsInt64();
 
 			Create.Table("agents")
-				.WithColumn(nameof(AgentId)).AsInt64()
-				.WithColumn(nameof(AgentUrl)).AsString();
+				.WithColumn(nameof(AgentId)).AsInt64().PrimaryKey().Identity()
+				.WithColumn(nameof(AgentUrl)).AsString()
+				.WithColumn("Enabled").AsBoolean();
 	    }
 
 	    public override void Down()
