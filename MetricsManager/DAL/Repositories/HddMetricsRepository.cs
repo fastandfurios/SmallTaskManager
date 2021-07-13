@@ -39,24 +39,19 @@ namespace MetricsManager.DAL.Repositories
 		    return connection.QuerySingle<DateTimeOffset>("SELECT ifnull(0, max(time)) FROM hddmetrics");
 	    }
 
-	    public IList<HddMetric> Get(int agentId, DateTimeOffset fromTime, DateTimeOffset toTime)
-	    {
-		    using var connection = _connection.GetOpenedConnection();
-
-		    return connection
-			    .Query<HddMetric>("SELECT id, agentId, value, time FROM hddmetrics WHERE time>=@fromTime AND time<=@toTime",
-				    new { agentId = agentId, fromTime = fromTime.ToUnixTimeSeconds(), toTime = toTime.ToUnixTimeSeconds() })
-			    .ToList();
-		}
-
-	    public IList<HddMetric> GetByTimePeriod(DateTimeOffset fromTime, DateTimeOffset toTime)
+	    public IList<HddMetric> GetMetricsFromAgent(int agentId, DateTimeOffset fromTime, DateTimeOffset toTime)
 	    {
 			using var connection = _connection.GetOpenedConnection();
 
 			return connection
 				.Query<HddMetric>("SELECT id, agentId, value, time FROM hddmetrics WHERE time>=@fromTime AND time<=@toTime",
-					new { fromTime = fromTime.ToUnixTimeSeconds(), toTime = toTime.ToUnixTimeSeconds() })
+					new { agentId = agentId, fromTime = fromTime.ToUnixTimeSeconds(), toTime = toTime.ToUnixTimeSeconds() })
 				.ToList();
 		}
+
+	    public IList<HddMetric> GetMetricsFromAllCluster(DateTimeOffset fromTime, DateTimeOffset toTime)
+	    {
+		    throw new NotImplementedException();
+	    }
     }
 }

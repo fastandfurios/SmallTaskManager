@@ -15,7 +15,17 @@ namespace MetricsManager.DAL.Repositories
 		    throw new NotImplementedException();
 	    }
 
-	    public IList<NetworkMetric> GetByTimePeriod(DateTimeOffset fromTime, DateTimeOffset toTime)
+	    public DateTimeOffset GetMaxDate()
+	    {
+		    throw new NotImplementedException();
+	    }
+
+	    public IList<NetworkMetric> GetMetricsFromAgent(int agentId, DateTimeOffset fromTime, DateTimeOffset toTime)
+	    {
+		    throw new NotImplementedException();
+	    }
+
+	    public IList<NetworkMetric> GetMetricsFromAllCluster(DateTimeOffset fromTime, DateTimeOffset toTime)
 	    {
 		    throw new NotImplementedException();
 	    }
