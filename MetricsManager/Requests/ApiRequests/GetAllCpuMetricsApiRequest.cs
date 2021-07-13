@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MetricsManager.Requests
+namespace MetricsManager.Requests.ApiRequests
 {
-    public class GetAllHddMetricsApiRequest
+    public class GetAllCpuMetricsApiRequest
     {
 	    public Uri ClientBaseAddress { get; set; }
 	    public DateTimeOffset FromTime { get; set; }

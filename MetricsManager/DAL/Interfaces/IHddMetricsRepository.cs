@@ -9,5 +9,7 @@ namespace MetricsManager.DAL.Interfaces
 {
     public interface IHddMetricsRepository : Core.Interfaces.IRepository<HddMetric>
     {
+	    DateTimeOffset GetMaxDate();
+	    IList<HddMetric> Get(int agentId, DateTimeOffset fromTime, DateTimeOffset toTime);
     }
 }

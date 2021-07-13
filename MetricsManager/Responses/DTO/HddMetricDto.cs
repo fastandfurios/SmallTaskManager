@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MetricsManager.Responses.DTO
 {
-    public class HddMetricDto : IMetricDto
+    public class HddMetricDto
     {
 	    public int AgentId { get; set; }
 	    public int Value { get; set; }

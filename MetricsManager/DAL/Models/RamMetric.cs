@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MetricsManager.DAL.Models
 {
-    public class RamMetric : IModelsMetric
+    public class RamMetric
     {
 	    public int Id { get; set; }
 	    public int AgentId { get; set; }

@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
-using MetricsManager.Requests;
-using MetricsManager.Responses;
+using MetricsManager.Requests.ApiRequests;
+using MetricsManager.Responses.ApiResponses;
 using Microsoft.Extensions.Logging;
 
 namespace MetricsManager.Client
@@ -16,7 +12,7 @@ namespace MetricsManager.Client
 	    private readonly HttpClient _httpClient;
 	    private readonly ILogger _logger;
 
-	    public MetricsAgentClient(HttpClient httpHttpClient, ILogger logger)
+	    public MetricsAgentClient(HttpClient httpHttpClient, ILogger<MetricsAgentClient> logger)
 	    {
 		    _httpClient = httpHttpClient;
 		    _logger = logger; 
@@ -49,7 +45,9 @@ namespace MetricsManager.Client
 
 			    using var responseStream = response.Content.ReadAsStreamAsync().Result;
 
-			    return JsonSerializer.DeserializeAsync<AllHddMetricsApiResponse>(responseStream).Result;
+				var result = JsonSerializer.DeserializeAsync<AllHddMetricsApiResponse>(responseStream).Result;
+
+				return result;
 		    }
 		    catch (Exception e)
 		    {

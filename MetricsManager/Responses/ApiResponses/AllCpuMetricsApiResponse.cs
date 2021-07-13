@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using MetricsManager.Responses.DTO;
 
-namespace MetricsManager.Responses
+namespace MetricsManager.Responses.ApiResponses
 {
-    public class AllHddMetricsApiResponse
+    public class AllCpuMetricsApiResponse
     {
-	    public List<HddMetricDto> Metrics { get; set; }
+	    public List<CpuMetricDto> Metrics { get; set; }
     }
 }

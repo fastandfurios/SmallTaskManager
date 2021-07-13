@@ -32,6 +32,23 @@ namespace MetricsManager.DAL.Repositories
 			    });
 		}
 
+	    public DateTimeOffset GetMaxDate()
+	    {
+		    using var connection = _connection.GetOpenedConnection();
+
+		    return connection.QuerySingle<DateTimeOffset>("SELECT ifnull(0, max(time)) FROM hddmetrics");
+	    }
+
+	    public IList<HddMetric> Get(int agentId, DateTimeOffset fromTime, DateTimeOffset toTime)
+	    {
+		    using var connection = _connection.GetOpenedConnection();
+
+		    return connection
+			    .Query<HddMetric>("SELECT id, agentId, value, time FROM hddmetrics WHERE time>=@fromTime AND time<=@toTime",
+				    new { agentId = agentId, fromTime = fromTime.ToUnixTimeSeconds(), toTime = toTime.ToUnixTimeSeconds() })
+			    .ToList();
+		}
+
 	    public IList<HddMetric> GetByTimePeriod(DateTimeOffset fromTime, DateTimeOffset toTime)
 	    {
 			using var connection = _connection.GetOpenedConnection();

@@ -1,24 +1,17 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using FluentMigrator.Runner;
 using MetricsManager.Client;
-using MetricsManager.Controllers;
 using MetricsManager.DAL.Interfaces;
 using MetricsManager.DAL.Repositories;
 using MetricsManager.DAL.Repositories.Connection;
 using MetricsManager.Jobs;
+using MetricsManager.QuartzService;
+using Microsoft.Extensions.Logging;
 using Polly;
 using Quartz;
 using Quartz.Impl;
@@ -61,6 +54,13 @@ namespace MetricsManager
 
 			services.AddSingleton<IJobFactory, SingletonJobFactory>();
 			services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
+
+			services.AddSingleton<HddMetricJob>();
+			services.AddSingleton(new JobSchedule(
+				jobType: typeof(HddMetricJob),
+				cronExpression: "0/5 * * * * ?"));
+
+			services.AddHostedService<QuartzHostedService>();
 
 			services.AddHttpClient<IMetricsAgentClient, MetricsAgentClient>()
 				.AddTransientHttpErrorPolicy(p =>

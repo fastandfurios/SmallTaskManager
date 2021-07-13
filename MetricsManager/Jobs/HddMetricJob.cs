@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using MetricsManager.Client;
 using MetricsManager.DAL.Interfaces;
-using MetricsManager.DAL.Models;
-using MetricsManager.Requests;
-using MetricsManager.Responses;
-using MetricsManager.Responses.DTO;
+using MetricsManager.Requests.ApiRequests;
 using Quartz;
 
 namespace MetricsManager.Jobs
@@ -30,19 +24,17 @@ namespace MetricsManager.Jobs
 
 	    public Task Execute(IJobExecutionContext context)
 	    {
+		    var maxDate = _hddMetricsRepository.GetMaxDate();
+
 		    foreach (var registerObject in _agentsRepository.GetRegisterObjects())
 		    {
-			    _metricsAgentClient.GetAllHddMetrics(new GetAllHddMetricsApiRequest
-			    {
-					
-			    });
+			     var response = _metricsAgentClient.GetAllHddMetrics(new GetAllHddMetricsApiRequest
+			     {
+				     FromTime = maxDate,
+				     ClientBaseAddress = new Uri(registerObject.AgentUrl),
+				     ToTime = DateTimeOffset.UtcNow
+			     });
 		    }
-
-
-		    _metricsAgentClient.GetAllHddMetrics(new GetAllHddMetricsApiRequest
-		    {
-				
-		    });
 
 		    return Task.CompletedTask;
 	    }

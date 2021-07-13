@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
@@ -11,7 +9,6 @@ using MetricsAgent.DAL.Repositories;
 using MetricsAgent.DAL.Repositories.Connection;
 using MetricsAgent.Jobs;
 using MetricsAgent.QuartzService;
-using MetricsAgent.Responses.DTO;
 using Quartz;
 using Quartz.Impl;
 using Quartz.Spi;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MetricsManager.DAL.Models
 {
-    public class DotNetMetric : IModelsMetric
+    public class DotNetMetric
     {
 	    public int Id { get; set; }
 	    public int AgentId { get; set; }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MetricsManager.Client;
+using MetricsManager.DAL.Interfaces;
 using MetricsManager.Requests;
 using Microsoft.Extensions.Logging;
 
@@ -15,12 +16,12 @@ namespace MetricsManager.Controllers
 	public class HddMetricsController : ControllerBase
 	{
 		private readonly ILogger<HddMetricsController> _logger;
-		private readonly IMetricsAgentClient _metricsAgentClient;
+		private readonly IHddMetricsRepository _repository;
 
-		public HddMetricsController(ILogger<HddMetricsController> logger, IMetricsAgentClient metricsAgentClient)
+		public HddMetricsController(ILogger<HddMetricsController> logger, IHddMetricsRepository repository)
 		{
 			_logger = logger;
-			_metricsAgentClient = metricsAgentClient;
+			_repository = repository;
 		}
 
 		[HttpGet("agent/{agentId}/from/{fromTime}/to/{toTime}")]
@@ -28,13 +29,9 @@ namespace MetricsManager.Controllers
 		{
 			_logger.LogInformation($"id {agentId} from {fromTime} to {toTime}");
 
-			var metrics = _metricsAgentClient.GetAllHddMetrics(new GetAllHddMetricsApiRequest
-			{
-				FromTime = fromTime,
-				ToTime = toTime
-			});
+			
 
-			return Ok(metrics);
+			return Ok();
 		}
 
 		[HttpGet("cluster/from/{fromTime}/to/{toTime}")]
