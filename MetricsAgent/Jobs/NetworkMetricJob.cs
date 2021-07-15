@@ -20,7 +20,7 @@ namespace MetricsAgent.Jobs
 		    _repository = repository;
 
 		    if (OperatingSystem.IsWindows())
-			    _counter = new PerformanceCounter("Network Interface", "Bytes Sent/sec", "Qualcomm Atheros AR8152_8158 PCI-E Fast Ethernet Controller [NDIS 6.20]");
+			    _counter = new PerformanceCounter("Network Interface", "Bytes Sent/sec", "Realtek PCIe GbE Family Controller _2");
 	    }
 
 	    public Task Execute(IJobExecutionContext context)

@@ -36,7 +36,7 @@ namespace MetricsManager.DAL.Repositories
 	    {
 		    using var connection = _connection.GetOpenedConnection();
 
-		    return connection.QuerySingle<DateTimeOffset>("SELECT ifnull(0, max(time)) FROM hddmetrics");
+		    return connection.QuerySingle<DateTimeOffset>("SELECT ifnull(max(time),0) FROM hddmetrics");
 	    }
 
 	    public IList<HddMetric> GetMetricsFromAgent(int agentId, DateTimeOffset fromTime, DateTimeOffset toTime)

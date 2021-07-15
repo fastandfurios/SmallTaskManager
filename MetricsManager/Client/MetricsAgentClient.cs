@@ -32,13 +32,13 @@ namespace MetricsManager.Client
 		    throw new NotImplementedException();
 	    }
 
-	    public IList<AllHddMetricsApiResponse> GetAllHddMetrics(GetAllHddMetricsApiRequest request)
+	    public AllHddMetricsApiResponse GetAllHddMetrics(GetAllHddMetricsApiRequest request)
 	    {
-		    var fromParameter = request.FromTime.ToString("s");
-		    var toParameter = request.ToTime.ToString("s");
+		    var fromParameter = request.FromTime.ToString("u");
+		    var toParameter = request.ToTime.ToString("u");
 
 		    var httpRequest = new HttpRequestMessage(HttpMethod.Get, 
-			    $"{request.ClientBaseAddress.AbsoluteUri}api/hdd/left/from/{fromParameter}/to/{toParameter}");
+			    $"{request.ClientBaseAddress}api/metrics/hdd/left/from/{fromParameter}/to/{toParameter}");
 
 		    try
 		    {
@@ -48,7 +48,7 @@ namespace MetricsManager.Client
 
 			    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
-				var result = JsonSerializer.DeserializeAsync<IList<AllHddMetricsApiResponse>>(responseStream, options).Result;
+				var result = JsonSerializer.DeserializeAsync<AllHddMetricsApiResponse>(responseStream, options).Result;
 
 				return result;
 		    }
