@@ -9,6 +9,8 @@ namespace MetricsManager.Responses.ApiResponses
 {
     public class DotNetMetricsApiResponse
     {
-	    public List<DotNetMetricDto> Metrics { get; set; }
+	    public int Id { get; set; }
+	    public int Value { get; set; }
+	    public DateTimeOffset Time { get; set; }
     }
 }

@@ -44,14 +44,19 @@ namespace MetricsManager.DAL.Repositories
 			using var connection = _connection.GetOpenedConnection();
 
 			return connection
-				.Query<HddMetric>("SELECT id, agentId, value, time FROM hddmetrics WHERE time>=@fromTime AND time<=@toTime",
+				.Query<HddMetric>("SELECT id, agentId, value, time FROM hddmetrics WHERE time>=@fromTime AND time<=@toTime AND agentId = @agentId",
 					new { agentId = agentId, fromTime = fromTime.ToUnixTimeSeconds(), toTime = toTime.ToUnixTimeSeconds() })
 				.ToList();
 		}
 
 	    public IList<HddMetric> GetMetricsFromAllCluster(DateTimeOffset fromTime, DateTimeOffset toTime)
 	    {
-		    throw new NotImplementedException();
-	    }
+			using var connection = _connection.GetOpenedConnection();
+
+			return connection
+				.Query<HddMetric>("SELECT id, agentId, value, time FROM hddmetrics WHERE time>=@fromTime AND time<=@toTime",
+					new { fromTime = fromTime.ToUnixTimeSeconds(), toTime = toTime.ToUnixTimeSeconds() })
+				.ToList();
+		}
     }
 }

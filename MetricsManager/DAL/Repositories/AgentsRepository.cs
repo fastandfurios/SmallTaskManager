@@ -53,7 +53,7 @@ namespace MetricsManager.DAL.Repositories
 	    {
 		    using var connection = _connection.GetOpenedConnection();
 
-		    return connection.Query<Models.Agents>("SELECT * FROM agents").ToList();
+			return connection.Query<Models.Agents>("SELECT * FROM agents").ToList();
 	    }
     }
 }

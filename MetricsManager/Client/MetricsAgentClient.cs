@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
 using MetricsManager.Requests.ApiRequests;
@@ -31,13 +32,13 @@ namespace MetricsManager.Client
 		    throw new NotImplementedException();
 	    }
 
-	    public AllHddMetricsApiResponse GetAllHddMetrics(GetAllHddMetricsApiRequest request)
+	    public IList<AllHddMetricsApiResponse> GetAllHddMetrics(GetAllHddMetricsApiRequest request)
 	    {
-		    var fromParameter = request.FromTime.ToUnixTimeSeconds();
-		    var toParameter = request.ToTime.ToUnixTimeSeconds();
+		    var fromParameter = request.FromTime.ToString("s");
+		    var toParameter = request.ToTime.ToString("s");
 
 		    var httpRequest = new HttpRequestMessage(HttpMethod.Get, 
-			    $"{request.ClientBaseAddress}/api/hdd/left/from/{fromParameter}/to/{toParameter}");
+			    $"{request.ClientBaseAddress.AbsoluteUri}api/hdd/left/from/{fromParameter}/to/{toParameter}");
 
 		    try
 		    {
@@ -45,7 +46,9 @@ namespace MetricsManager.Client
 
 			    using var responseStream = response.Content.ReadAsStreamAsync().Result;
 
-				var result = JsonSerializer.DeserializeAsync<AllHddMetricsApiResponse>(responseStream).Result;
+			    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+				var result = JsonSerializer.DeserializeAsync<IList<AllHddMetricsApiResponse>>(responseStream, options).Result;
 
 				return result;
 		    }

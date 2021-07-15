@@ -9,6 +9,8 @@ namespace MetricsManager.Responses.ApiResponses
 {
     public class AllCpuMetricsApiResponse
     {
-	    public List<CpuMetricDto> Metrics { get; set; }
+	    public int Id { get; set; }
+	    public int Value { get; set; }
+	    public DateTimeOffset Time { get; set; }
     }
 }
