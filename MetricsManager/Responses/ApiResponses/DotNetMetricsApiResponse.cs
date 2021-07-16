@@ -6,6 +6,6 @@ namespace MetricsManager.Responses.ApiResponses
 {
     public class DotNetMetricsApiResponse
     {
-        public List<DotNetMetricApiModel> MyProperty { get; set; }
+        public List<DotNetMetricApiModel> Metrics { get; set; }
     }
 }
