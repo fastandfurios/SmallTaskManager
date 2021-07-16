@@ -35,14 +35,14 @@ namespace MetricsManager.Client
 
 				var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
-				return JsonSerializer.DeserializeAsync<AllCpuMetricsApiResponse>(responseStream, options).Result;
-			}
+                return JsonSerializer.DeserializeAsync<AllCpuMetricsApiResponse>(responseStream, options).Result;
+            }
             catch (Exception e)
             {
 				_logger.LogError(e.Message);
 			}
 
-		    return null;
+            return null;
 	    }
 
 	    public DotNetMetricsApiResponse GetDotNetMetrics(DotNetHeapMetricsApiRequest request)

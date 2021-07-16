@@ -11,7 +11,7 @@ namespace MetricsManager.DAL.Repositories.Connection
     {
 	    private readonly string _connectionString = "Data Source=metrics.db;Version=3;Pooling=true;Max Pool Size=100;";
 
-	    public SQLiteConnection GetOpenedConnection()
-		    => new SQLiteConnection(_connectionString);
+        public SQLiteConnection GetOpenedConnection()
+            => new SQLiteConnection(_connectionString);
     }
 }

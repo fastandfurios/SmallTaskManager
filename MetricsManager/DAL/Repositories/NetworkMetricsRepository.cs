@@ -23,7 +23,7 @@ namespace MetricsManager.DAL.Repositories
 	    {
 			using var connection = _connection.GetOpenedConnection();
 
-			connection.Execute("INSERT INTO hddmetrics(agentId, value, time) VALUES(@agentId, @value, @time)",
+			connection.Execute("INSERT INTO networkmetrics(agentId, value, time) VALUES(@agentId, @value, @time)",
 				new
 				{
 					agentId = item.AgentId,
