@@ -46,12 +46,16 @@ namespace MetricsManager.Jobs
 					FromTime = maxDate,
 					ToTime = DateTimeOffset.UtcNow
 			    });
-		    }
 
-            foreach (var metric in metrics.Metrics)
-            {
-				_hddMetricsRepository.Create(_mapper.Map<HddMetric>(metric));
-            }
+				if (registerObject.Enabled)
+				{
+					foreach (var metric in metrics.Metrics)
+					{
+						metric.AgentId = registerObject.AgentId;
+						_hddMetricsRepository.Create(_mapper.Map<HddMetric>(metric));
+					}
+				}
+			}
 
 		    return Task.CompletedTask;
 	    }

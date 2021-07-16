@@ -60,7 +60,7 @@ namespace MetricsManager.DAL.Repositories
 			    new {agentId = agentId});
 	    }
 
-	    public IList<Agents> GetRegisterObjects()
+	    public List<Agents> GetRegisterObjects()
 	    {
 		    using var connection = _connection.GetOpenedConnection();
 

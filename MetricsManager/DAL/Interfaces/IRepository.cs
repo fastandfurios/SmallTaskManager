@@ -7,6 +7,6 @@ namespace MetricsManager.DAL.Interfaces
 	    void Create(T item);
 	    T EnableAgent(D item);
 	    T DisableAgent(D item);
-	    IList<T> GetRegisterObjects();
+	    List<T> GetRegisterObjects();
     }
 }
