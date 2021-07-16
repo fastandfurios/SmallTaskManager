@@ -36,7 +36,7 @@ namespace MetricsManager.DAL.Repositories
 	    {
 			using var connection = _connection.GetOpenedConnection();
 
-			return connection.QuerySingle<DateTimeOffset>("SELECT ifnull(max(time),0) FROM hddmetrics");
+			return connection.QuerySingle<DateTimeOffset>("SELECT ifnull(max(time),0) FROM dotnetmetrics");
 		}
 
 	    public IList<DotNetMetric> GetMetricsFromAgent(int agentId, DateTimeOffset fromTime, DateTimeOffset toTime)
@@ -44,7 +44,7 @@ namespace MetricsManager.DAL.Repositories
 			using var connection = _connection.GetOpenedConnection();
 
 			return connection
-				.Query<DotNetMetric>("SELECT id, agentId, value, time FROM hddmetrics WHERE time>=@fromTime AND time<=@toTime AND agentId = @agentId",
+				.Query<DotNetMetric>("SELECT id, agentId, value, time FROM dotnetmetrics WHERE time>=@fromTime AND time<=@toTime AND agentId = @agentId",
 					new { agentId = agentId, fromTime = fromTime.ToUnixTimeSeconds(), toTime = toTime.ToUnixTimeSeconds() })
 				.ToList(); ;
 	    }
@@ -54,7 +54,7 @@ namespace MetricsManager.DAL.Repositories
 			using var connection = _connection.GetOpenedConnection();
 
 			return connection
-				.Query<DotNetMetric>("SELECT id, agentId, value, time FROM hddmetrics WHERE time>=@fromTime AND time<=@toTime",
+				.Query<DotNetMetric>("SELECT id, agentId, value, time FROM dotnetmetrics WHERE time>=@fromTime AND time<=@toTime",
 					new { fromTime = fromTime.ToUnixTimeSeconds(), toTime = toTime.ToUnixTimeSeconds() })
 				.ToList();
 		}

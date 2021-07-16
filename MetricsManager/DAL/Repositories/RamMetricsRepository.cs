@@ -36,7 +36,7 @@ namespace MetricsManager.DAL.Repositories
 	    {
 			using var connection = _connection.GetOpenedConnection();
 
-			return connection.QuerySingle<DateTimeOffset>("SELECT ifnull(max(time),0) FROM hddmetrics");
+			return connection.QuerySingle<DateTimeOffset>("SELECT ifnull(max(time),0) FROM rammetrics");
 		}
 
 	    public IList<RamMetric> GetMetricsFromAgent(int agentId, DateTimeOffset fromTime, DateTimeOffset toTime)
@@ -44,7 +44,7 @@ namespace MetricsManager.DAL.Repositories
 			using var connection = _connection.GetOpenedConnection();
 
 			return connection
-				.Query<RamMetric>("SELECT id, agentId, value, time FROM hddmetrics WHERE time>=@fromTime AND time<=@toTime AND agentId = @agentId",
+				.Query<RamMetric>("SELECT id, agentId, value, time FROM rammetrics WHERE time>=@fromTime AND time<=@toTime AND agentId = @agentId",
 					new { agentId = agentId, fromTime = fromTime.ToUnixTimeSeconds(), toTime = toTime.ToUnixTimeSeconds() })
 				.ToList();
 		}
@@ -54,7 +54,7 @@ namespace MetricsManager.DAL.Repositories
 			using var connection = _connection.GetOpenedConnection();
 
 			return connection
-				.Query<RamMetric>("SELECT id, agentId, value, time FROM hddmetrics WHERE time>=@fromTime AND time<=@toTime",
+				.Query<RamMetric>("SELECT id, agentId, value, time FROM rammetrics WHERE time>=@fromTime AND time<=@toTime",
 					new { fromTime = fromTime.ToUnixTimeSeconds(), toTime = toTime.ToUnixTimeSeconds() })
 				.ToList();
 		}
