@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Dapper;
 using MetricsManager.DAL.Interfaces;
+using MetricsManager.DAL.Models;
 using MetricsManager.DAL.Repositories.Connection;
 
 namespace MetricsManager.DAL.Repositories
@@ -20,7 +21,7 @@ namespace MetricsManager.DAL.Repositories
 			SqlMapper.AddTypeHandler(new UriHandler());
 	    }
 
-	    public void Create(Models.Agents item)
+	    public void Create(Agents item)
 	    {
 			using var connection = _connection.GetOpenedConnection();
 
@@ -33,27 +34,37 @@ namespace MetricsManager.DAL.Repositories
 				});
 		}
 
-	    public Models.Agents GetEnabledAgent(int agentId)
+	    public Agents EnableAgent(int agentId)
 	    {
+			var enabled = true;
+
 		    using var connection = _connection.GetOpenedConnection();
 
-		    return connection.QuerySingle<Models.Agents>("SELECT * FROM agents WHERE agentId=@agentId",
+			connection.Execute("UPDATE agents SET enabled=@enabled WHERE agentId=@agentId",
+				new { agentId = agentId, enabled = enabled });
+
+		    return connection.QuerySingle<Agents>("SELECT * FROM agents WHERE agentId=@agentId",
 			    new{agentId = agentId});
 	    }
 
-	    public Models.Agents GetDisabledAgent(int agentId)
+	    public Agents DisableAgent(int agentId)
 	    {
+			var enabled = false;
+
 		    using var connection = _connection.GetOpenedConnection();
 
-		    return connection.QuerySingle<Models.Agents>("SELECT * FROM agents WHERE agentId=@agentId",
+			connection.Execute("UPDATE agents SET enabled=@enabled WHERE agentId=@agentId",
+				new { agentId = agentId, enabled = enabled });
+
+			return connection.QuerySingle<Agents>("SELECT * FROM agents WHERE agentId=@agentId",
 			    new {agentId = agentId});
 	    }
 
-	    public IList<Models.Agents> GetRegisterObjects()
+	    public IList<Agents> GetRegisterObjects()
 	    {
 		    using var connection = _connection.GetOpenedConnection();
 
-			return connection.Query<Models.Agents>("SELECT * FROM agents").ToList();
+			return connection.Query<Agents>("SELECT * FROM agents").ToList();
 	    }
     }
 }

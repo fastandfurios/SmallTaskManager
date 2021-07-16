@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MetricsManager.DAL.Interfaces;
 using Microsoft.Extensions.Logging;
+using MetricsManager.DAL.Models;
 
 namespace MetricsManager.Controllers
 {
@@ -23,11 +24,11 @@ namespace MetricsManager.Controllers
 		}
 
 		[HttpPost("register")]
-		public IActionResult RegisterAgent([FromBody] DAL.Models.Agents agent)
+		public IActionResult RegisterAgent([FromBody] Agents agent)
 		{
 			_logger.LogInformation($"agent {agent.AgentId} {agent.AgentUrl} {agent.Enabled}");
 
-			_repository.Create(new DAL.Models.Agents
+			_repository.Create(new Agents
 			{
 				AgentId = agent.AgentId,
 				AgentUrl = agent.AgentUrl,
@@ -42,7 +43,7 @@ namespace MetricsManager.Controllers
 		{
 			_logger.LogInformation($"id {agentId}");
 
-			var agent = _repository.GetEnabledAgent(agentId);
+			var agent = _repository.EnableAgent(agentId);
 
 			return Ok(agent);
 		}
@@ -52,7 +53,7 @@ namespace MetricsManager.Controllers
 		{
 			_logger.LogInformation($"id {agentId}");
 
-			var agent = _repository.GetDisabledAgent(agentId);
+			var agent = _repository.DisableAgent(agentId);
 
 			return Ok(agent);
 		}

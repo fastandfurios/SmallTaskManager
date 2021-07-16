@@ -5,8 +5,8 @@ namespace MetricsManager.DAL.Interfaces
     public interface IRepository<T, in D> where T : class
     {
 	    void Create(T item);
-	    T GetEnabledAgent(D item);
-	    T GetDisabledAgent(D item);
+	    T EnableAgent(D item);
+	    T DisableAgent(D item);
 	    IList<T> GetRegisterObjects();
     }
 }
