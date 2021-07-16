@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MetricsManager.Responses.DTO
 {
-    public class RamMetricDto : IMetricDto
+    public class RamMetricDto
     {
 	    public int AgentId { get; set; }
 	    public int Value { get; set; }

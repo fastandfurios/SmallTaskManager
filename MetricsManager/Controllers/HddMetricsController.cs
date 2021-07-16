@@ -48,7 +48,7 @@ namespace MetricsManager.Controllers
 				response.Metrics.Add(_mapper.Map<HddMetricDto>(metric));
 			}
 
-			return Ok(metrics);
+			return Ok(response);
 		}
 
 		[HttpGet("cluster/from/{fromTime}/to/{toTime}")]
@@ -68,7 +68,7 @@ namespace MetricsManager.Controllers
 				response.Metrics.Add(_mapper.Map<HddMetricDto>(metric));
 			}
 
-			return Ok(metrics);
+			return Ok(response);
 		}
 	}
 }
