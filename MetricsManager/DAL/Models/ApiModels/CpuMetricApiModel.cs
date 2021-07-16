@@ -2,7 +2,7 @@
 
 namespace MetricsManager.DAL.Models.ApiModels
 {
-    public class HddMetricApiModel
+    public class CpuMetricApiModel
     {
         public int Id { get; set; }
         public int AgentId { get; set; }
