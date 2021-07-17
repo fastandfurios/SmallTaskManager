@@ -134,5 +134,5 @@ namespace MetricsManager
                 sw.IncludeXmlComments(xmlPath);
 			});
         }
-	}
+    }
 }

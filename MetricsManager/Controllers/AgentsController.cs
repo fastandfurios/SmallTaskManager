@@ -110,7 +110,6 @@ namespace MetricsManager.Controllers
         ///
         /// </remarks>
         /// <returns>Выключенного агента</returns>
-        /// <param name="agentId">Id агента</param>
         /// <response code="200">если все хорошо</response>
         /// <response code="400">если передали не правильные параметры</response>
 		[HttpGet("objects")]
