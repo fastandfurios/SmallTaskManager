@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.IO;
+using System.Reflection;
 using AutoMapper;
 using FluentMigrator.Runner;
 using MetricsManager.Client;
@@ -12,6 +14,7 @@ using MetricsManager.DAL.Repositories.Connection;
 using MetricsManager.Jobs;
 using MetricsManager.QuartzService;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 using Polly;
 using Quartz;
 using Quartz.Impl;
@@ -85,11 +88,23 @@ namespace MetricsManager
 			services.AddHttpClient<IMetricsAgentClient, MetricsAgentClient>()
 				.AddTransientHttpErrorPolicy(p =>
 					p.WaitAndRetryAsync(3, _ => TimeSpan.FromMilliseconds(1000)));
-		}
+
+            services.AddSwaggerGen();
+
+            Description(services);
+        }
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IMigrationRunner migrationRunner)
-		{
+        {
+            app.UseSwagger();
+
+            app.UseSwaggerUI(sw =>
+            {
+				sw.SwaggerEndpoint("/swagger/v1/swagger.json", "API сервиса агента сбора метрик");
+				sw.RoutePrefix = String.Empty;
+            });
+
 			app.UseHttpsRedirection();
 
 			app.UseRouting();
@@ -103,5 +118,21 @@ namespace MetricsManager
 
 			migrationRunner.MigrateUp();
 		}
+
+        private void Description(IServiceCollection services)
+        {
+			services.AddSwaggerGen(sw =>
+            {
+				sw.SwaggerDoc("v1", new OpenApiInfo
+                {
+					Version = "v1",
+					Title = "API сервиса агента сбора метрик"
+                });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                sw.IncludeXmlComments(xmlPath);
+			});
+        }
 	}
 }
