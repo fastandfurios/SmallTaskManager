@@ -40,7 +40,7 @@ namespace MetricsManager.Controllers
         ///     GET agent/1/from/1970.01.01 00:00:00/to/1970.01.01 00:10:00
         ///
         /// </remarks>
-        /// <param name="agentId">начальная метрка времени</param>
+        /// <param name="agentId">Id агента</param>
         /// <param name="fromTime">начальная метрка времени</param>
         /// <param name="toTime">конечная метрка времени</param>
         /// <returns>Список метрик, которые были сохранены в заданном диапазоне времени</returns>
