@@ -5,8 +5,11 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using AutoMapper;
+using MetricsManagerClient.Client;
 using MetricsManagerClient.Views;
 using Microsoft.Extensions.DependencyInjection;
+using Polly;
 
 namespace MetricsManagerClient
 {
@@ -28,6 +31,14 @@ namespace MetricsManagerClient
         {
             services.AddSingleton<MainWindow>();
 
+            
+
+            var maperConfiguration = new MapperConfiguration(mp => mp.AddProfile(new MapperProfile()));
+            services.AddSingleton(maperConfiguration.CreateMapper());
+
+            services.AddHttpClient<IMetricsAgentClient, MetricsAgentClient>()
+                .AddTransientHttpErrorPolicy(p =>
+                    p.WaitAndRetryAsync(3, _ => TimeSpan.FromMilliseconds(1000)));
         }
 
         private void OnStartup(object sender, StartupEventArgs e)

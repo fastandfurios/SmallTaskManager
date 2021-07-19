@@ -8,6 +8,7 @@ namespace MetricsManagerClient.Models
 {
     public class NetworkMetric
     {
-        
+        public int AgentId { get; set; }
+        public int Value { get; set; }
     }
 }
