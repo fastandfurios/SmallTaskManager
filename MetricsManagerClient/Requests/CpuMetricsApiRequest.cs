@@ -8,6 +8,7 @@ namespace MetricsManagerClient.Requests
 {
     public class CpuMetricsApiRequest
     {
-        
+        public DateTimeOffset FromTime { get; set; }
+        public DateTimeOffset ToTime { get; set; }
     }
 }

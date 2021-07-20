@@ -7,9 +7,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using AutoMapper;
 using MetricsManagerClient.Client;
+using MetricsManagerClient.Jobs;
 using MetricsManagerClient.Views;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
+using Quartz;
+using Quartz.Impl;
+using Quartz.Spi;
 
 namespace MetricsManagerClient
 {
@@ -31,10 +35,16 @@ namespace MetricsManagerClient
         {
             services.AddSingleton<MainWindow>();
 
-            
+            var mapperConfiguration = new MapperConfiguration(mp => mp.AddProfile(new MapperProfile()));
+            services.AddSingleton(mapperConfiguration.CreateMapper());
 
-            var maperConfiguration = new MapperConfiguration(mp => mp.AddProfile(new MapperProfile()));
-            services.AddSingleton(maperConfiguration.CreateMapper());
+            services.AddSingleton<IJobFactory, SingletonJobFactory>();
+            services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
+
+            services.AddSingleton<CpuMetricJob>();
+            services.AddSingleton(new JobSchedule(
+                jobType: typeof(CpuMetricJob),
+                cronExpression: "0/5 * * * * ?"));
 
             services.AddHttpClient<IMetricsAgentClient, MetricsAgentClient>()
                 .AddTransientHttpErrorPolicy(p =>

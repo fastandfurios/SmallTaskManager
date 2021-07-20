@@ -7,6 +7,7 @@ using Quartz;
 
 namespace MetricsManagerClient.Jobs
 {
+    [DisallowConcurrentExecution]
     public class CpuMetricJob : IJob
     {
         public Task Execute(IJobExecutionContext context)
