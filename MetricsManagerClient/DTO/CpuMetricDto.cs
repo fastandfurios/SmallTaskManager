@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace MetricsManagerClient.Models
+namespace MetricsManagerClient.DTO
 {
-    public class CpuMetric
+    public class CpuMetricDto
     {
         public int AgentId { get; set; }
         public int Value { get; set; }

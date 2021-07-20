@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
+using MetricsManagerClient.DTO;
+using MetricsManagerClient.Models;
 
 namespace MetricsManagerClient
 {
     public class MapperProfile : Profile
     {
-        
+        public MapperProfile()
+        {
+            CreateMap<CpuMetricDto, CpuMetric>();
+        }
     }
 }
