@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MetricsManagerClient.Models
+namespace MetricsManagerClient.DTO
 {
-    public class RamMetric
+    public class RamMetricDto
     {
         public int AgentId { get; set; }
         public int Value { get; set; }
-        public DateTimeOffset Time { get; set; }
+        public string Time { get; set; }
     }
 }

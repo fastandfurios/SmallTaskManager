@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using MetricsManagerClient.Client;
+using MetricsManagerClient.DTO;
 using MetricsManagerClient.Models;
 using MetricsManagerClient.Requests;
 using Prism.Commands;
@@ -17,43 +18,50 @@ namespace MetricsManagerClient.ViewModels
     public class MainWindowViewModel : BindableBase
     {
         private readonly IMetricsAgentClient _agentClient;
-
-        private int _agentId;
-        public int AgentId
-        {
-            get => _agentId;
-            set => _agentId = value;
-        }
-
-        private int _value;
-        public int Value
-        {
-            get => _value;
-            set => _value = value;
-        }
-
-        private DateTimeOffset _time;
-        public DateTimeOffset Time
-        {
-            get => _time;
-            set => _time = value;
-        }
+        private readonly IMapper _mapper;
         public DateTimeOffset FromTime { get; set; }
         public DateTimeOffset ToTime { get; set; }
-        public ObservableCollection<CpuMetric> Metrics { get; private set; } = new();
+        public ObservableCollection<CpuMetricDto> CpuMetrics { get; private set; } = new();
+        public ObservableCollection<DotNetMetricDto> DotNetMetrics { get; private set; } = new();
+        public ObservableCollection<HddMetricDto> HddMetrics { get; private set; } = new();
+        public ObservableCollection<NetworkMetricDto> NetworkMetrics { get; private set; } = new();
+        public ObservableCollection<RamMetricDto> RamMetrics { get; private set; } = new();
 
-
-        public MainWindowViewModel(IMetricsAgentClient agentClient)
+        public MainWindowViewModel(IMetricsAgentClient agentClient, IMapper mapper)
         {
             _agentClient = agentClient;
+            _mapper = mapper;
         }
 
-        private DelegateCommand _command = null;
-        public DelegateCommand Command => _command ??= new DelegateCommand(GetCpuMetrics);
+        private DelegateCommand<string> _command = null;
+        public DelegateCommand<string> Command => _command ??= new DelegateCommand<string>(GetMetrics);
+        
+
+        private void GetMetrics(string parameter)
+        {
+            switch (parameter)
+            {
+                case "CpuCommand":
+                    GetCpuMetrics();
+                    break;
+                case "NETCommand":
+                    GetDotNetMetrics();
+                    break;
+                case "HddCommand":
+                    GetHddMetrics();
+                    break;
+                case "NetworkCommand":
+                    GetNetworkMetrics();
+                    break;
+                case "RamCommand":
+                    GetRamMetrics();
+                    break;
+            }
+        }
 
         private void GetCpuMetrics()
         {
-            var metric = new CpuMetric();
+            var metric = new CpuMetricDto();
 
             var response = _agentClient.GetAllCpuMetrics(new CpuMetricsApiRequest
             {
@@ -63,12 +71,71 @@ namespace MetricsManagerClient.ViewModels
 
             foreach (var responseMetric in response.Metrics)
             {
-                Metrics.Add(new CpuMetric
-                {
-                     AgentId = responseMetric.AgentId,
-                     Time = responseMetric.Time,
-                     Value = responseMetric.Value
-                });
+                CpuMetrics.Add(_mapper.Map<CpuMetricDto>(responseMetric));
+            }
+        }
+
+        private void GetDotNetMetrics()
+        {
+            var metric = new DotNetMetricDto();
+
+            var response = _agentClient.GetAllDotNetMetrics(new DotNetMetricsApiRequest()
+            {
+                FromTime = FromTime,
+                ToTime = ToTime
+            });
+
+            foreach (var responseMetric in response.Metrics)
+            {
+                DotNetMetrics.Add(_mapper.Map<DotNetMetricDto>(responseMetric));
+            }
+        }
+
+        private void GetHddMetrics()
+        {
+            var metric = new HddMetricDto();
+
+            var response = _agentClient.GetAllHddMetrics(new HddMetricsApiRequest()
+            {
+                FromTime = FromTime,
+                ToTime = ToTime
+            });
+
+            foreach (var responseMetric in response.Metrics)
+            {
+                HddMetrics.Add(_mapper.Map<HddMetricDto>(responseMetric));
+            }
+        }
+
+        private void GetNetworkMetrics()
+        {
+            var metric = new NetworkMetricDto();
+
+            var response = _agentClient.GetAllNetworkMetrics(new NetworkMetricsApiRequest()
+            {
+                FromTime = FromTime,
+                ToTime = ToTime
+            });
+
+            foreach (var responseMetric in response.Metrics)
+            {
+                NetworkMetrics.Add(_mapper.Map<NetworkMetricDto>(responseMetric));
+            }
+        }
+
+        private void GetRamMetrics()
+        {
+            var metric = new RamMetricDto();
+
+            var response = _agentClient.GetAllRamMetrics(new RamMetricsApiRequest()
+            {
+                FromTime = FromTime,
+                ToTime = ToTime
+            });
+
+            foreach (var responseMetric in response.Metrics)
+            {
+                RamMetrics.Add(_mapper.Map<RamMetricDto>(responseMetric));
             }
         }
     }

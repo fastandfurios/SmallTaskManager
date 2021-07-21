@@ -9,8 +9,6 @@ using AutoMapper;
 using MetricsManagerClient.Client;
 using MetricsManagerClient.ViewModels;
 using MetricsManagerClient.Views;
-using Microsoft.Extensions.DependencyInjection;
-using Polly;
 using Prism.Ioc;
 using Prism.Unity;
 
@@ -23,10 +21,10 @@ namespace MetricsManagerClient
     {
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterSingleton<IMetricsAgentClient, MetricsAgentClient>();
+
             var mapperConfiguration = new MapperConfiguration(mp => mp.AddProfile(new MapperProfile()));
             containerRegistry.RegisterInstance(mapperConfiguration.CreateMapper());
-
-            containerRegistry.RegisterSingleton<IMetricsAgentClient, MetricsAgentClient>();
         }
 
         protected override Window CreateShell()

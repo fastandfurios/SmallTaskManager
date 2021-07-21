@@ -22,13 +22,13 @@
         </TabControl.Resources>
         <TabItem Header="Метрика процессора">
             <StackPanel>
-                <TextBlock Margin="10,5" FontSize="20" Text="Метрика с процессора"/>
+                <TextBlock Margin="10,5" FontSize="20" Text="Метрика процессора"/>
                 <TextBlock Margin="10,5" FontSize="15" Text="Введите время, за период которого, вывести данные метрики"/>
                 <TextBlock Margin="10,0" FontSize="15" Text="с :"/>
                 <DatePickerTextBox  Text="{Binding FromTime}"/>
                 <TextBlock Margin="10,0" FontSize="15" Text="по :"/>
                 <DatePickerTextBox Text="{Binding ToTime}"/>
-                <Button Margin="20" Width="100" Height="20" Command="{Binding Command}" Content="Запустить"/>
+                <Button Margin="20" Width="100" Height="20" Command="{Binding Command}" CommandParameter="CpuCommand" Content="Запустить"/>
                 <Grid Margin="10,10">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -43,7 +43,7 @@
                     <TextBlock Style="{StaticResource TopRow}" Grid.Column="2" Text="Значение"/>
                 </Grid>
                 <ScrollViewer Margin="10,0" Height="230" VerticalScrollBarVisibility="Visible">
-                    <ListView ItemsSource="{Binding Metrics}">
+                    <ListView ItemsSource="{Binding CpuMetrics}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Grid Width="720">
@@ -66,15 +66,184 @@
             </StackPanel>
         </TabItem>
         <TabItem Header="Метрика .NET">
-
+            <StackPanel>
+                <TextBlock Margin="10,5" FontSize="20" Text="Метрика .NET"/>
+                <TextBlock Margin="10,5" FontSize="15" Text="Введите время, за период которого, вывести данные метрики"/>
+                <TextBlock Margin="10,0" FontSize="15" Text="с :"/>
+                <DatePickerTextBox  Text="{Binding FromTime}"/>
+                <TextBlock Margin="10,0" FontSize="15" Text="по :"/>
+                <DatePickerTextBox Text="{Binding ToTime}"/>
+                <Button Margin="20" Width="100" Height="20" Command="{Binding Command}" CommandParameter="NETCommand" Content="Запустить"/>
+                <Grid Margin="10,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Style="{StaticResource TopRow}" Grid.Column="0" Text="Id агента"/>
+                    <TextBlock Style="{StaticResource TopRow}" Grid.Column="1" Text="Время"/>
+                    <TextBlock Style="{StaticResource TopRow}" Grid.Column="2" Text="Значение"/>
+                </Grid>
+                <ScrollViewer Margin="10,0" Height="230" VerticalScrollBarVisibility="Visible">
+                    <ListView ItemsSource="{Binding DotNetMetrics}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Width="720">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="20" />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock TextAlignment="Center" Grid.Row="0" Grid.Column="0" Text="{Binding AgentId}" />
+                                    <TextBlock TextAlignment="Center" Grid.Row="0" Grid.Column="1" Text="{Binding Time}" />
+                                    <TextBlock TextAlignment="Center" Grid.Row="0" Grid.Column="2" Text="{Binding Value}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </ScrollViewer>
+            </StackPanel>
         </TabItem>
         <TabItem Header="Метрика ПЗУ">
+            <StackPanel>
+                <TextBlock Margin="10,5" FontSize="20" Text="Метрика ПЗУ"/>
+                <TextBlock Margin="10,5" FontSize="15" Text="Введите время, за период которого, вывести данные метрики"/>
+                <TextBlock Margin="10,0" FontSize="15" Text="с :"/>
+                <DatePickerTextBox  Text="{Binding FromTime}"/>
+                <TextBlock Margin="10,0" FontSize="15" Text="по :"/>
+                <DatePickerTextBox Text="{Binding ToTime}"/>
+                <Button Margin="20" Width="100" Height="20" Command="{Binding Command}" CommandParameter="HddCommand" Content="Запустить"/>
+                <Grid Margin="10,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Style="{StaticResource TopRow}" Grid.Column="0" Text="Id агента"/>
+                    <TextBlock Style="{StaticResource TopRow}" Grid.Column="1" Text="Время"/>
+                    <TextBlock Style="{StaticResource TopRow}" Grid.Column="2" Text="Значение"/>
+                </Grid>
+                <ScrollViewer Margin="10,0" Height="230" VerticalScrollBarVisibility="Visible">
+                    <ListView ItemsSource="{Binding HddMetrics}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Width="720">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="20" />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock TextAlignment="Center" Grid.Row="0" Grid.Column="0" Text="{Binding AgentId}" />
+                                    <TextBlock TextAlignment="Center" Grid.Row="0" Grid.Column="1" Text="{Binding Time}" />
+                                    <TextBlock TextAlignment="Center" Grid.Row="0" Grid.Column="2" Text="{Binding Value}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </ScrollViewer>
+            </StackPanel>
         </TabItem>
         <TabItem Header="Метрика сети">
-
+            <StackPanel>
+                <TextBlock Margin="10,5" FontSize="20" Text="Метрика сети"/>
+                <TextBlock Margin="10,5" FontSize="15" Text="Введите время, за период которого, вывести данные метрики"/>
+                <TextBlock Margin="10,0" FontSize="15" Text="с :"/>
+                <DatePickerTextBox  Text="{Binding FromTime}"/>
+                <TextBlock Margin="10,0" FontSize="15" Text="по :"/>
+                <DatePickerTextBox Text="{Binding ToTime}"/>
+                <Button Margin="20" Width="100" Height="20" Command="{Binding Command}" CommandParameter="NetworkCommand" Content="Запустить"/>
+                <Grid Margin="10,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Style="{StaticResource TopRow}" Grid.Column="0" Text="Id агента"/>
+                    <TextBlock Style="{StaticResource TopRow}" Grid.Column="1" Text="Время"/>
+                    <TextBlock Style="{StaticResource TopRow}" Grid.Column="2" Text="Значение"/>
+                </Grid>
+                <ScrollViewer Margin="10,0" Height="230" VerticalScrollBarVisibility="Visible">
+                    <ListView ItemsSource="{Binding NetworkMetrics}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Width="720">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="20" />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock TextAlignment="Center" Grid.Row="0" Grid.Column="0" Text="{Binding AgentId}" />
+                                    <TextBlock TextAlignment="Center" Grid.Row="0" Grid.Column="1" Text="{Binding Time}" />
+                                    <TextBlock TextAlignment="Center" Grid.Row="0" Grid.Column="2" Text="{Binding Value}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </ScrollViewer>
+            </StackPanel>
         </TabItem>
         <TabItem Header="Метрика ОЗУ">
-
+            <StackPanel>
+                <TextBlock Margin="10,5" FontSize="20" Text="Метрика ОЗУ"/>
+                <TextBlock Margin="10,5" FontSize="15" Text="Введите время, за период которого, вывести данные метрики"/>
+                <TextBlock Margin="10,0" FontSize="15" Text="с :"/>
+                <DatePickerTextBox  Text="{Binding FromTime}"/>
+                <TextBlock Margin="10,0" FontSize="15" Text="по :"/>
+                <DatePickerTextBox Text="{Binding ToTime}"/>
+                <Button Margin="20" Width="100" Height="20" Command="{Binding Command}" CommandParameter="RamCommand" Content="Запустить"/>
+                <Grid Margin="10,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Style="{StaticResource TopRow}" Grid.Column="0" Text="Id агента"/>
+                    <TextBlock Style="{StaticResource TopRow}" Grid.Column="1" Text="Время"/>
+                    <TextBlock Style="{StaticResource TopRow}" Grid.Column="2" Text="Значение"/>
+                </Grid>
+                <ScrollViewer Margin="10,0" Height="230" VerticalScrollBarVisibility="Visible">
+                    <ListView ItemsSource="{Binding RamMetrics}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Width="720">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="20" />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock TextAlignment="Center" Grid.Row="0" Grid.Column="0" Text="{Binding AgentId}" />
+                                    <TextBlock TextAlignment="Center" Grid.Row="0" Grid.Column="1" Text="{Binding Time}" />
+                                    <TextBlock TextAlignment="Center" Grid.Row="0" Grid.Column="2" Text="{Binding Value}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </ScrollViewer>
+            </StackPanel>
         </TabItem>
     </TabControl>
 </Window>
