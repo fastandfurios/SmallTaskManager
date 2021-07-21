@@ -7,54 +7,29 @@ using System.Threading.Tasks;
 using System.Windows;
 using AutoMapper;
 using MetricsManagerClient.Client;
-using MetricsManagerClient.Jobs;
+using MetricsManagerClient.ViewModels;
 using MetricsManagerClient.Views;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
-using Quartz;
-using Quartz.Impl;
-using Quartz.Spi;
+using Prism.Ioc;
+using Prism.Unity;
 
 namespace MetricsManagerClient
 {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application
+    public partial class App : PrismApplication
     {
-        private readonly IServiceProvider _serviceProvider;
-
-        public App()
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            var services = new ServiceCollection();
-            ConfigureServices(services);
-            _serviceProvider = services.BuildServiceProvider();
-        }
-
-        private void ConfigureServices(IServiceCollection services)
-        {
-            services.AddSingleton<MainWindow>();
-
             var mapperConfiguration = new MapperConfiguration(mp => mp.AddProfile(new MapperProfile()));
-            services.AddSingleton(mapperConfiguration.CreateMapper());
+            containerRegistry.RegisterInstance(mapperConfiguration);
 
-            services.AddSingleton<IJobFactory, SingletonJobFactory>();
-            services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
-
-            services.AddSingleton<CpuMetricJob>();
-            services.AddSingleton(new JobSchedule(
-                jobType: typeof(CpuMetricJob),
-                cronExpression: "0/5 * * * * ?"));
-
-            services.AddHttpClient<IMetricsAgentClient, MetricsAgentClient>()
-                .AddTransientHttpErrorPolicy(p =>
-                    p.WaitAndRetryAsync(3, _ => TimeSpan.FromMilliseconds(1000)));
+            containerRegistry.RegisterSingleton<IMetricsAgentClient, MetricsAgentClient>();
         }
 
-        private void OnStartup(object sender, StartupEventArgs e)
-        {
-            var mainWindow = _serviceProvider.GetService<MainWindow>();
-            mainWindow?.Show();
-        }
+        protected override Window CreateShell()
+            => Container.Resolve<MainWindow>();
     }
 }

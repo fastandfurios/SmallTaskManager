@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -7,20 +8,17 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using MetricsManagerClient.Requests;
 using MetricsManagerClient.Responses.ApiResponses;
-using Microsoft.Extensions.Logging;
 
 namespace MetricsManagerClient.Client
 {
     public class MetricsAgentClient : IMetricsAgentClient
     {
         private readonly HttpClient _httpClient;
-        private readonly ILogger _logger;
         public Uri ClientBaseAddress => new ("http://localhost:61461");
 
-        public MetricsAgentClient(HttpClient httpClient, ILogger<MetricsAgentClient> logger)
+        public MetricsAgentClient(HttpClient httpClient)
         {
             _httpClient = httpClient;
-            _logger = logger;
         }
 
         public CpuMetricsApiResponse GetAllCpuMetrics(CpuMetricsApiRequest request)
@@ -43,7 +41,7 @@ namespace MetricsManagerClient.Client
             }
             catch (Exception e)
             {
-               _logger.LogError(e.Message);
+                Debug.Write(e);
             }
 
             return null;

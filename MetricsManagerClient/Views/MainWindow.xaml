@@ -4,23 +4,46 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MetricsManagerClient.Views"
+        xmlns:prism="http://prismlibrary.com/"
         mc:Ignorable="d"
         Title="MetricsManagerClient" Height="450" Width="800">
     <TabControl>
+        <TabControl.Resources>
+
+        </TabControl.Resources>
         <TabItem Header="Метрика процессора">
             <StackPanel>
                 <TextBlock Margin="10,10" FontSize="20" Text="Метрика с процессора"/>
+                <TextBlock Margin="10,10" FontSize="15" Text="Введите время, за период которого, вывести данные метрики"/>
+                <TextBox Margin="10,10"/>
                 <Grid Margin="10,10">
+                    <Grid.Resources>
+                        <Style TargetType="TextBlock" x:Key="TopRow">
+                            <Setter Property="Grid.Row" Value="0"/>
+                            <Setter Property="TextAlignment" Value="Center"/>
+                            <Setter Property="FontSize" Value="15"/>
+                        </Style>
+                        <Style TargetType="TextBlock" x:Key="BottomRow" BasedOn="{StaticResource TopRow}">
+                            <Setter Property="Grid.Row" Value="1"/>
+                        </Style>
+                    </Grid.Resources>
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="20" />
                         <RowDefinition Height="20"/>
                     </Grid.RowDefinitions>
+                    <TextBlock Style="{StaticResource TopRow}" Grid.Column="0" Text="Id агента"/>
+                    <TextBlock Style="{StaticResource TopRow}" Grid.Column="1" Text="Время"/>
+                    <TextBlock Style="{StaticResource TopRow}" Grid.Column="2" Text="Значение"/>
+                    <TextBlock Style="{StaticResource BottomRow}" Grid.Column="0" Text="{Binding AgentId}"/>
+                    <TextBlock Style="{StaticResource BottomRow}" Grid.Column="1" Text="{Binding Time}"/>
+                    <TextBlock Style="{StaticResource BottomRow}" Grid.Column="2" Text="{Binding Value}"/>
                 </Grid>
-                <TextBlock></TextBlock>
-                <TextBlock/>
+                <Button Margin="20" Width="100" Height="20" Command="{Binding Command}" Content="Запустить"/>
             </StackPanel>
         </TabItem>
         <TabItem Header="Метрика .NET">
