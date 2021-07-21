@@ -14,7 +14,7 @@ namespace MetricsManagerClient.Client
     public class MetricsAgentClient : IMetricsAgentClient
     {
         private readonly HttpClient _httpClient;
-        public Uri ClientBaseAddress => new ("http://localhost:61461");
+        public Uri ClientBaseAddress => new("http://localhost:61461");
 
         public MetricsAgentClient(HttpClient httpClient)
         {
@@ -26,7 +26,7 @@ namespace MetricsManagerClient.Client
             var fromTime = request.FromTime.ToString("u");
             var toTime = request.ToTime.ToString("u");
 
-            var httpRequest = new HttpRequestMessage(HttpMethod.Get, 
+            var httpRequest = new HttpRequestMessage(HttpMethod.Get,
                 $"{ClientBaseAddress}api/metrics/cpu/cluster/from/{fromTime}/to/{toTime}");
 
             try
@@ -37,7 +37,9 @@ namespace MetricsManagerClient.Client
 
                 var options = new JsonSerializerOptions {PropertyNameCaseInsensitive = true};
 
-                return JsonSerializer.DeserializeAsync<CpuMetricsApiResponse>(responseStream, options).Result;
+                var result = JsonSerializer.DeserializeAsync<CpuMetricsApiResponse>(responseStream, options).Result;
+
+                return result;
             }
             catch (Exception e)
             {
@@ -45,6 +47,26 @@ namespace MetricsManagerClient.Client
             }
 
             return null;
+        }
+
+        public DotNetMetricsApiResponse GetAllDotNetMetrics(DotNetMetricsApiRequest request)
+        {
+            throw new NotImplementedException();
+        }
+
+        public HddMetricsApiResponse GetAllHddMetrics(HddMetricsApiRequest request)
+        {
+            throw new NotImplementedException();
+        }
+
+        public NetworkMetricsApiResponse GetAllNetworkMetrics(NetworkMetricsApiRequest request)
+        {
+            throw new NotImplementedException();
+        }
+
+        public RamMetricsApiResponse GetAllRamMetrics(RamMetricsApiRequest request)
+        {
+            throw new NotImplementedException();
         }
     }
 }

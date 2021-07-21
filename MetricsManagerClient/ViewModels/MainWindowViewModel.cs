@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -37,6 +38,10 @@ namespace MetricsManagerClient.ViewModels
             get => _time;
             set => _time = value;
         }
+        public DateTimeOffset FromTime { get; set; }
+        public DateTimeOffset ToTime { get; set; }
+        public ObservableCollection<CpuMetric> Metrics { get; private set; } = new();
+
 
         public MainWindowViewModel(IMetricsAgentClient agentClient)
         {
@@ -44,24 +49,27 @@ namespace MetricsManagerClient.ViewModels
         }
 
         private DelegateCommand _command = null;
-        public DelegateCommand Command => _command ??= new DelegateCommand(GetMetrics);
+        public DelegateCommand Command => _command ??= new DelegateCommand(GetCpuMetrics);
 
-        private void GetMetrics()
+        private void GetCpuMetrics()
         {
             var metric = new CpuMetric();
 
             var response = _agentClient.GetAllCpuMetrics(new CpuMetricsApiRequest
             {
-                FromTime = DateTimeOffset.UtcNow,
-                ToTime = DateTimeOffset.UtcNow
+                FromTime = FromTime,
+                ToTime = ToTime
             });
 
-            _agentId = 12;
-            RaisePropertyChanged(nameof(AgentId));
-            _time = DateTimeOffset.UtcNow;
-            RaisePropertyChanged(nameof(Time));
-            _value = 16;
-            RaisePropertyChanged(nameof(Value));
+            foreach (var responseMetric in response.Metrics)
+            {
+                Metrics.Add(new CpuMetric
+                {
+                     AgentId = responseMetric.AgentId,
+                     Time = responseMetric.Time,
+                     Value = responseMetric.Value
+                });
+            }
         }
     }
 }

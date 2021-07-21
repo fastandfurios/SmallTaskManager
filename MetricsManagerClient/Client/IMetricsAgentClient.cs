@@ -11,5 +11,9 @@ namespace MetricsManagerClient.Client
     public interface IMetricsAgentClient
     {
         CpuMetricsApiResponse GetAllCpuMetrics(CpuMetricsApiRequest request);
+        DotNetMetricsApiResponse GetAllDotNetMetrics(DotNetMetricsApiRequest request);
+        HddMetricsApiResponse GetAllHddMetrics(HddMetricsApiRequest request);
+        NetworkMetricsApiResponse GetAllNetworkMetrics(NetworkMetricsApiRequest request);
+        RamMetricsApiResponse GetAllRamMetrics(RamMetricsApiRequest request);
     }
 }

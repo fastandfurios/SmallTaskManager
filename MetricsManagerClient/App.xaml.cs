@@ -24,7 +24,7 @@ namespace MetricsManagerClient
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             var mapperConfiguration = new MapperConfiguration(mp => mp.AddProfile(new MapperProfile()));
-            containerRegistry.RegisterInstance(mapperConfiguration);
+            containerRegistry.RegisterInstance(mapperConfiguration.CreateMapper());
 
             containerRegistry.RegisterSingleton<IMetricsAgentClient, MetricsAgentClient>();
         }
