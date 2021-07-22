@@ -36,7 +36,6 @@ namespace MetricsManagerClient.ViewModels
         private DelegateCommand<string> _command = null;
         public DelegateCommand<string> Command => _command ??= new DelegateCommand<string>(GetMetrics);
         
-
         private void GetMetrics(string parameter)
         {
             switch (parameter)
