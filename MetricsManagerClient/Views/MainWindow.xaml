@@ -12,9 +12,9 @@
                 <TextBlock Margin="10,5" FontSize="20" Text="Метрика процессора"/>
                 <TextBlock Style="{StaticResource Description}"/>
                 <TextBlock Margin="10,0" FontSize="15" Text="с : "/>
-                <TextBox ToolTip="пример: 1970.01.01 00:00:00" Text="{Binding FromTime}"/>
+                <TextBox Text="{Binding FromTime}"/>
                 <TextBlock Margin="10,0" FontSize="15" Text="по :"/>
-                <TextBox ToolTip="пример: 1970.01.01 00:10:00" Text="{Binding ToTime}"/>
+                <TextBox Text="{Binding ToTime}"/>
                 <Button Command="{Binding Command}" CommandParameter="CpuCommand"/>
                 <Grid Margin="10,5">
                     <Grid.ColumnDefinitions>
@@ -57,9 +57,9 @@
                 <TextBlock Margin="10,5" FontSize="20" Text="Метрика .NET"/>
                 <TextBlock Style="{StaticResource Description}"/>
                 <TextBlock Margin="10,0" FontSize="15" Text="с :"/>
-                <TextBox ToolTip="пример: 1970.01.01 00:00:00" Text="{Binding FromTime}"/>
+                <TextBox Text="{Binding FromTime}"/>
                 <TextBlock Margin="10,0" FontSize="15" Text="по :"/>
-                <TextBox ToolTip="пример: 1970.01.01 00:10:00" Text="{Binding ToTime}"/>
+                <TextBox Text="{Binding ToTime}"/>
                 <Button Command="{Binding Command}" CommandParameter="NETCommand"/>
                 <Grid Margin="10,10">
                     <Grid.ColumnDefinitions>
@@ -102,9 +102,9 @@
                 <TextBlock Margin="10,5" FontSize="20" Text="Метрика ПЗУ"/>
                 <TextBlock Style="{StaticResource Description}"/>
                 <TextBlock Margin="10,0" FontSize="15" Text="с :"/>
-                <TextBox ToolTip="пример: 1970.01.01 00:00:00" Text="{Binding FromTime}"/>
+                <TextBox Text="{Binding FromTime}"/>
                 <TextBlock Margin="10,0" FontSize="15" Text="по :"/>
-                <TextBox ToolTip="пример: 1970.01.01 00:10:00" Text="{Binding ToTime}"/>
+                <TextBox Text="{Binding ToTime}"/>
                 <Button Command="{Binding Command}" CommandParameter="HddCommand"/>
                 <Grid Margin="10,10">
                     <Grid.ColumnDefinitions>
@@ -147,9 +147,9 @@
                 <TextBlock Margin="10,5" FontSize="20" Text="Метрика сети"/>
                 <TextBlock Style="{StaticResource Description}"/>
                 <TextBlock Margin="10,0" FontSize="15" Text="с :"/>
-                <TextBox ToolTip="пример: 1970.01.01 00:00:00" Text="{Binding FromTime}"/>
+                <TextBox Text="{Binding FromTime}"/>
                 <TextBlock Margin="10,0" FontSize="15" Text="по :"/>
-                <TextBox ToolTip="пример: 1970.01.01 00:10:00" Text="{Binding ToTime}"/>
+                <TextBox Text="{Binding ToTime}"/>
                 <Button Command="{Binding Command}" CommandParameter="NetworkCommand"/>
                 <Grid Margin="10,10">
                     <Grid.ColumnDefinitions>
@@ -192,9 +192,9 @@
                 <TextBlock Margin="10,5" FontSize="20" Text="Метрика ОЗУ"/>
                 <TextBlock Style="{StaticResource Description}"/>
                 <TextBlock Margin="10,0" FontSize="15" Text="с :"/>
-                <TextBox ToolTip="пример: 1970.01.01 00:00:00" Text="{Binding FromTime}"/>
+                <TextBox Text="{Binding FromTime}"/>
                 <TextBlock Margin="10,0" FontSize="15" Text="по :"/>
-                <TextBox ToolTip="пример: 1970.01.01 00:10:00" Text="{Binding ToTime}"/>
+                <TextBox Text="{Binding ToTime}"/>
                 <Button Command="{Binding Command}" CommandParameter="RamCommand"/>
                 <Grid Margin="10,10">
                     <Grid.ColumnDefinitions>

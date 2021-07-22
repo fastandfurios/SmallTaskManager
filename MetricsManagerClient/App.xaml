@@ -11,6 +11,7 @@
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="Margin" Value="10,5"/>
+            <Setter Property="ToolTip" Value="формат ввода: 00:00:00 01:01:1970"/>
         </Style>
         <Style TargetType="TextBlock" x:Key="TopRow">
             <Setter Property="Grid.Row" Value="0"/>
