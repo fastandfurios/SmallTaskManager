@@ -9,13 +9,19 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
-using System.Data.SQLite;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using FluentMigrator.Runner;
 using MetricsAgent.DAL.Interfaces;
 using MetricsAgent.DAL.Repositories;
 using MetricsAgent.DAL.Repositories.Connection;
+using MetricsAgent.Jobs;
+using MetricsAgent.QuartzService;
+using MetricsAgent.Responses.DTO;
+using Quartz;
+using Quartz.Impl;
+using Quartz.Spi;
 
 namespace MetricsAgent
 {
@@ -28,11 +34,12 @@ namespace MetricsAgent
 
 		public IConfiguration Configuration { get; }
 
+		private const string ConnectionString = "Data Source=metrics.db;Version=3;Pooling=true;Max Pool Size=100;";
+
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddControllers();
-			ConfigureSqlLiteConnection();
 			services.AddSingleton<ICpuMetricsRepository, CpuMetricsRepository>();
 			services.AddSingleton<IDotNetMetricsRepository, DotNetMetricsRepository>();
 			services.AddSingleton<IHddMetricsRepository, HddMetricsRepository>();
@@ -40,44 +47,48 @@ namespace MetricsAgent
 			services.AddSingleton<IRamMetricsRepository, RamMetricsRepository>();
 			services.AddSingleton<IConnection, Connection>();
 
-			var mapperConfiguration = new MapperConfiguration(mp => mp.AddProfile(new MapperProfile()));
-			services.AddSingleton(mapperConfiguration.CreateMapper());
-		}
+			services.AddSingleton(new MapperConfiguration(mp => mp.AddProfile(new MapperProfile()))
+					.CreateMapper());
 
-		private void ConfigureSqlLiteConnection()
-		{
-			const string connectionString = "Data Source=metrics.db;Version=3;Pooling=true;Max Pool Size=100;";
-			var connection = new SQLiteConnection(connectionString);
-			connection.Open();
-			PrepareSchema(connection);
-		}
+			services.AddFluentMigratorCore()
+				.ConfigureRunner(rb => rb.AddSQLite()
+					.WithGlobalConnectionString(ConnectionString)
+					.ScanIn(typeof(Startup).Assembly).For.Migrations())
+				.AddLogging(lb => lb.AddFluentMigratorConsole());
 
-		private void PrepareSchema(SQLiteConnection connection)
-		{
-			using (var command = new SQLiteCommand(connection))
-			{
-				command.CommandText = "DROP TABLE IF EXISTS cpumetrics";
-				command.ExecuteNonQuery();
+			services.AddSingleton<IJobFactory, SingletonJobFactory>();
+			services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
 
-				command.CommandText = @"CREATE TABLE cpumetrics(id INTEGER PRIMARY KEY, value INT, time INT)";
-				command.ExecuteNonQuery();
+			services.AddSingleton<CpuMetricJob>();
+			services.AddSingleton(new JobSchedule(
+				jobType: typeof(CpuMetricJob),
+				cronExpression: "0/5 * * * * ?"));
 
-				command.CommandText = "INSERT INTO cpumetrics(value, time) VALUES(10, 1)";
-				command.ExecuteNonQuery();
+			services.AddSingleton<DotNetMetricJob>();
+			services.AddSingleton(new JobSchedule(
+				jobType: typeof(DotNetMetricJob),
+				cronExpression: "0/5 * * * * ?"));
 
-				command.CommandText = "INSERT INTO cpumetrics(value, time) VALUES(50, 2)";
-				command.ExecuteNonQuery();
+			services.AddSingleton<HddMetricJob>();
+			services.AddSingleton(new JobSchedule(
+				jobType: typeof(HddMetricJob),
+				cronExpression: "0/5 * * * * ?"));
 
-				command.CommandText = "INSERT INTO cpumetrics(value, time) VALUES(75, 4)";
-				command.ExecuteNonQuery();
+			services.AddSingleton<NetworkMetricJob>();
+			services.AddSingleton(new JobSchedule(
+				jobType: typeof(NetworkMetricJob),
+				cronExpression: "0/5 * * * * ?"));
 
-				command.CommandText = "INSERT INTO cpumetrics(value, time) VALUES(90, 5)";
-				command.ExecuteNonQuery();
-			}
+			services.AddSingleton<RamMetricJob>();
+			services.AddSingleton(new JobSchedule(
+				jobType: typeof(RamMetricJob),
+				cronExpression: "0/5 * * * * ?"));
+
+			services.AddHostedService<QuartzHostedService>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+		public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IMigrationRunner migrationRunner)
 		{
 			app.UseHttpsRedirection();
 
@@ -89,6 +100,8 @@ namespace MetricsAgent
 			{
 				endpoints.MapControllers();
 			});
+
+			migrationRunner.MigrateUp();
 		}
 	}
 }

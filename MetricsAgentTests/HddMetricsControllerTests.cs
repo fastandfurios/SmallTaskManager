@@ -4,7 +4,6 @@ using AutoMapper;
 using MetricsAgent.Controllers;
 using MetricsAgent.DAL.Interfaces;
 using MetricsAgent.DAL.Models;
-using MetricsAgent.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;

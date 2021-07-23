@@ -34,9 +34,6 @@ namespace MetricsAgent.Controllers
 		[HttpGet("hdd/left/from/{fromTime}/to/{toTime}")]
 		public IActionResult GetMetricsFromAgent([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
 		{
-			fromTime = new DateTimeOffset(fromTime.UtcDateTime);
-			toTime = new DateTimeOffset(toTime.UtcDateTime);
-
 			_logger.LogInformation($"fromTime {fromTime} toTime {toTime}");
 
 			var metrics = _repository.GetByTimePeriod(fromTime, toTime);

@@ -22,13 +22,28 @@ namespace MetricsAgent.DAL.Repositories
 		    SqlMapper.AddTypeHandler(new DateTimeOffsetHandler());
 	    }
 
+	    public void Create(CpuMetric item)
+	    {
+		    using var connection = _connection.GetOpenedConnection();
+
+		    connection.Execute("INSERT INTO cpumetrics(value, time) VALUES(@value, @time)", 
+			    new
+		    {
+				value = item.Value,
+				time = item.Time
+		    });
+	    }
+
 	    public IList<CpuMetric> GetByTimePeriod(DateTimeOffset fromTime, DateTimeOffset toTime)
 	    {
 		    using var connection = _connection.GetOpenedConnection();
 
-		    return connection.Query<CpuMetric>("SELECT * FROM cpumetrics")
-				    .Where(w => w.Time.Second >= fromTime.Second && w.Time.Second <= toTime.Second)
-				    .ToList();
+		    return connection.Query<CpuMetric>("SELECT id, value, time FROM cpumetrics WHERE time>=@fromTime AND time<=@toTime",
+				    new
+				    {
+						fromTime = fromTime.ToUnixTimeSeconds(),
+						toTime = toTime.ToUnixTimeSeconds()
+				    }).ToList();
 	    }
     }
 }

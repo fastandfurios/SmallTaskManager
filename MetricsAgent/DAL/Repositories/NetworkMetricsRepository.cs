@@ -21,13 +21,28 @@ namespace MetricsAgent.DAL.Repositories
 		    SqlMapper.AddTypeHandler(new DateTimeOffsetHandler());
 	    }
 
+	    public void Create(NetworkMetric item)
+	    {
+			using var connection = _connection.GetOpenedConnection();
+
+			connection.Execute("INSERT INTO networkmetrics(value, time) VALUES(@value, @time)",
+				new
+				{
+					value = item.Value,
+					time = item.Time
+				});
+		}
+
 	    public IList<NetworkMetric> GetByTimePeriod(DateTimeOffset fromTime, DateTimeOffset toTime)
 	    {
-		    using var connection = _connection.GetOpenedConnection();
-			
-				return connection.Query<NetworkMetric>("SELECT * FROM networkmetrics")
-					.Where(w => w.Time.Second >= fromTime.Second && w.Time.Second <= toTime.Second)
-					.ToList();
-	    }
+			using var connection = _connection.GetOpenedConnection();
+
+			return connection.Query<NetworkMetric>("SELECT id, value, time FROM networkmetrics WHERE time>=@fromTime AND time<=@toTime",
+				new
+				{
+					fromTime = fromTime.ToUnixTimeSeconds(),
+					toTime = toTime.ToUnixTimeSeconds()
+				}).ToList();
+		}
     }
 }
