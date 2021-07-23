@@ -12,12 +12,10 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
 using System.Threading.Tasks;
-using MetricsAgent.Controllers;
-using MetricsAgent.Repositories.CpuMetricsRepository;
-using MetricsAgent.Repositories.DotNetMetricsRepository;
-using MetricsAgent.Repositories.HddMetricsRepository;
-using MetricsAgent.Repositories.NetworkMetricsRepository;
-using MetricsAgent.Repositories.RamMetricsRepository;
+using AutoMapper;
+using MetricsAgent.DAL.Interfaces;
+using MetricsAgent.DAL.Repositories;
+using MetricsAgent.DAL.Repositories.Connection;
 
 namespace MetricsAgent
 {
@@ -40,6 +38,10 @@ namespace MetricsAgent
 			services.AddSingleton<IHddMetricsRepository, HddMetricsRepository>();
 			services.AddSingleton<INetworkMetricsRepository, NetworkMetricsRepository>();
 			services.AddSingleton<IRamMetricsRepository, RamMetricsRepository>();
+			services.AddSingleton<IConnection, Connection>();
+
+			var mapperConfiguration = new MapperConfiguration(mp => mp.AddProfile(new MapperProfile()));
+			services.AddSingleton(mapperConfiguration.CreateMapper());
 		}
 
 		private void ConfigureSqlLiteConnection()

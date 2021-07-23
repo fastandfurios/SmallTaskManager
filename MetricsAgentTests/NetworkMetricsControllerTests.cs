@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using AutoMapper;
 using MetricsAgent.Controllers;
-using MetricsAgent.Models;
-using MetricsAgent.Repositories.NetworkMetricsRepository;
+using MetricsAgent.DAL.Interfaces;
+using MetricsAgent.DAL.Models;
+using MetricsAgent.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -15,12 +17,13 @@ namespace MetricsAgentTests
 	    private readonly NetworkMetricsController _controller;
 	    private readonly Mock<ILogger<NetworkMetricsController>> _mockLogger;
 	    private readonly Mock<INetworkMetricsRepository> _mock;
+	    private readonly Mock<IMapper> _mockMapper;
 
 	    public NetworkMetricsControllerTests()
 	    {
 		    _mock = new Mock<INetworkMetricsRepository>();
 		    _mockLogger = new Mock<ILogger<NetworkMetricsController>>();
-		    _controller = new NetworkMetricsController(_mockLogger.Object, _mock.Object);
+		    _controller = new NetworkMetricsController(_mockLogger.Object, _mock.Object, _mockMapper.Object);
 	    }
 
 	    [Fact]

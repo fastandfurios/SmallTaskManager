@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MetricsAgent.Models;
+using Core.Interfaces;
+using MetricsAgent.DAL.Models;
 
-namespace MetricsAgent.Repositories.NetworkMetricsRepository
+namespace MetricsAgent.DAL.Interfaces
 {
     public interface INetworkMetricsRepository : IRepository<NetworkMetric>
     {
