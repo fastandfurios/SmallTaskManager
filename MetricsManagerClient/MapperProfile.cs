@@ -7,7 +7,7 @@ namespace MetricsManagerClient
 {
     public class MapperProfile : Profile
     {
-	    public MapperProfile()
+        public MapperProfile()
 	    {
 		    CreateMap<CpuMetric, CpuMetricDto>()
 			    .ForMember(dest => dest.Time,

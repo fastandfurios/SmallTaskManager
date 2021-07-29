@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MetricsManagerClient.Client;
 using MetricsManagerClient.DTO;
-using MetricsManagerClient.Models;
 using MetricsManagerClient.Requests;
+using MetricsManagerClient.Responses.ApiResponses;
 using Prism.Commands;
 using Prism.Mvvm;
 
@@ -62,14 +62,15 @@ namespace MetricsManagerClient.ViewModels
         {
             var metric = new CpuMetricDto();
 
-            var response = _agentClient.GetAllCpuMetrics(new CpuMetricsApiRequest
-            {
-                FromTime = DateTimeOffset.Parse(FromTime),
-                ToTime = DateTimeOffset.Parse(ToTime)
-            });
+            var response = _agentClient.GetAllMetrics<CpuMetricsApiResponse>(
+                new CpuMetricsApiRequest
+                {
+                    FromTime = DateTimeOffset.Parse(FromTime),
+                    ToTime = DateTimeOffset.Parse(ToTime)
+                }, "cpu");
 
             foreach (var responseMetric in response.Metrics)
-            {
+            {            
                 CpuMetrics.Add(_mapper.Map<CpuMetricDto>(responseMetric));
             }
         }
@@ -78,11 +79,11 @@ namespace MetricsManagerClient.ViewModels
         {
             var metric = new DotNetMetricDto();
 
-            var response = _agentClient.GetAllDotNetMetrics(new DotNetMetricsApiRequest()
+            var response = _agentClient.GetAllMetrics<DotNetMetricsApiResponse>(new DotNetMetricsApiRequest()
             {
                 FromTime = DateTimeOffset.Parse(FromTime),
                 ToTime = DateTimeOffset.Parse(ToTime)
-            });
+            }, "dotnet");
 
             foreach (var responseMetric in response.Metrics)
             {
@@ -94,11 +95,11 @@ namespace MetricsManagerClient.ViewModels
         {
             var metric = new HddMetricDto();
 
-            var response = _agentClient.GetAllHddMetrics(new HddMetricsApiRequest()
+            var response = _agentClient.GetAllMetrics<HddMetricsApiResponse>(new HddMetricsApiRequest()
             {
                 FromTime = DateTimeOffset.Parse(FromTime),
                 ToTime = DateTimeOffset.Parse(ToTime)
-            });
+            }, "hdd");
 
             foreach (var responseMetric in response.Metrics)
             {
@@ -110,11 +111,11 @@ namespace MetricsManagerClient.ViewModels
         {
             var metric = new NetworkMetricDto();
 
-            var response = _agentClient.GetAllNetworkMetrics(new NetworkMetricsApiRequest()
+            var response = _agentClient.GetAllMetrics<NetworkMetricsApiResponse>(new NetworkMetricsApiRequest()
             {
                 FromTime = DateTimeOffset.Parse(FromTime),
                 ToTime = DateTimeOffset.Parse(ToTime)
-            });
+            }, "network");
 
             foreach (var responseMetric in response.Metrics)
             {
@@ -126,11 +127,11 @@ namespace MetricsManagerClient.ViewModels
         {
             var metric = new RamMetricDto();
 
-            var response = _agentClient.GetAllRamMetrics(new RamMetricsApiRequest()
+            var response = _agentClient.GetAllMetrics<RamMetricsApiResponse>(new RamMetricsApiRequest()
             {
                 FromTime = DateTimeOffset.Parse(FromTime),
                 ToTime = DateTimeOffset.Parse(ToTime)
-            });
+            }, "ram");
 
             foreach (var responseMetric in response.Metrics)
             {
