@@ -41,9 +41,7 @@ namespace MetricsManagerClient.Client
 
                 var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
-                var result = JsonSerializer.DeserializeAsync<TResponse>(responseStream, options).Result;
-
-                return result;
+                return JsonSerializer.DeserializeAsync<TResponse>(responseStream, options).Result;
             }
             catch (Exception e)
             {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -60,8 +61,6 @@ namespace MetricsManagerClient.ViewModels
 
         private void GetCpuMetrics()
         {
-            var metric = new CpuMetricDto();
-
             var response = _agentClient.GetAllMetrics<CpuMetricsApiResponse>(
                 new CpuMetricsApiRequest
                 {
@@ -77,8 +76,6 @@ namespace MetricsManagerClient.ViewModels
 
         private void GetDotNetMetrics()
         {
-            var metric = new DotNetMetricDto();
-
             var response = _agentClient.GetAllMetrics<DotNetMetricsApiResponse>(new DotNetMetricsApiRequest()
             {
                 FromTime = DateTimeOffset.Parse(FromTime),
@@ -93,8 +90,6 @@ namespace MetricsManagerClient.ViewModels
 
         private void GetHddMetrics()
         {
-            var metric = new HddMetricDto();
-
             var response = _agentClient.GetAllMetrics<HddMetricsApiResponse>(new HddMetricsApiRequest()
             {
                 FromTime = DateTimeOffset.Parse(FromTime),
@@ -109,8 +104,6 @@ namespace MetricsManagerClient.ViewModels
 
         private void GetNetworkMetrics()
         {
-            var metric = new NetworkMetricDto();
-
             var response = _agentClient.GetAllMetrics<NetworkMetricsApiResponse>(new NetworkMetricsApiRequest()
             {
                 FromTime = DateTimeOffset.Parse(FromTime),
@@ -125,8 +118,6 @@ namespace MetricsManagerClient.ViewModels
 
         private void GetRamMetrics()
         {
-            var metric = new RamMetricDto();
-
             var response = _agentClient.GetAllMetrics<RamMetricsApiResponse>(new RamMetricsApiRequest()
             {
                 FromTime = DateTimeOffset.Parse(FromTime),
