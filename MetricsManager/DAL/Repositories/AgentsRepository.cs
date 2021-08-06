@@ -60,11 +60,11 @@ namespace MetricsManager.DAL.Repositories
 			    new {agentId = agentId});
 	    }
 
-	    public List<Agents> GetRegisterObjects()
+	    public IEnumerable<Agents> GetRegisterObjects()
 	    {
 		    using var connection = _connection.GetOpenedConnection();
 
-			return connection.Query<Agents>("SELECT * FROM agents").ToList();
+			return connection.Query<Agents>("SELECT * FROM agents");
 	    }
     }
 }

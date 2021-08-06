@@ -39,7 +39,7 @@ namespace MetricsManager.DAL.Repositories
 			return connection.QuerySingle<DateTimeOffset>("SELECT ifnull(max(time),0) FROM networkmetrics");
 		}
 
-	    public IList<NetworkMetric> GetMetricsFromAgent(int agentId, DateTimeOffset fromTime, DateTimeOffset toTime)
+	    public IEnumerable<NetworkMetric> GetMetricsFromAgent(int agentId, DateTimeOffset fromTime, DateTimeOffset toTime)
 	    {
 			using var connection = _connection.GetOpenedConnection();
 
@@ -49,14 +49,14 @@ namespace MetricsManager.DAL.Repositories
 				.ToList();
 		}
 
-	    public IList<NetworkMetric> GetMetricsFromAllCluster(DateTimeOffset fromTime, DateTimeOffset toTime)
+	    public IEnumerable<NetworkMetric> GetMetricsFromAllCluster(DateTimeOffset fromTime, DateTimeOffset toTime)
 	    {
 			using var connection = _connection.GetOpenedConnection();
 
-			return connection
-				.Query<NetworkMetric>("SELECT id, agentId, value, time FROM networkmetrics WHERE time>=@fromTime AND time<=@toTime",
-					new { fromTime = fromTime.ToUnixTimeSeconds(), toTime = toTime.ToUnixTimeSeconds() })
-				.ToList();
-		}
+            return connection
+                .Query<NetworkMetric>(
+                    "SELECT id, agentId, value, time FROM networkmetrics WHERE time>=@fromTime AND time<=@toTime",
+                    new {fromTime = fromTime.ToUnixTimeSeconds(), toTime = toTime.ToUnixTimeSeconds()});
+        }
     }
 }
