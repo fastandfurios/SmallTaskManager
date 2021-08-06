@@ -1,6 +1,8 @@
 using System;
 using MetricsManager;
 using MetricsManager.Controllers;
+using MetricsManager.DAL.Interfaces;
+using MetricsManager.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Xunit;
@@ -11,19 +13,20 @@ namespace MetricsManagerTests
 	{
 		private readonly AgentsController _controller;
 		private readonly ILogger<AgentsController> _logger;
+		private readonly IAgentsRepository _repository;
 
 		public AgentsControllerTests()
 		{
 			_logger = new Logger<AgentsController>(new LoggerFactory());
-			_controller = new AgentsController(_logger);
+			_controller = new AgentsController(_logger, _repository);
 		}
 
 		[Fact]
 		public void RegisterAgent_ResultOk()
 		{
-			var agentInfo = new AgentInfo();
+			var agent = new MetricsManager.DAL.Models.Agents();
 
-			var result = _controller.RegisterAgent(agentInfo);
+			var result = _controller.RegisterAgent(agent);
 
 			_ = Assert.IsAssignableFrom<IActionResult>(result);
 		}

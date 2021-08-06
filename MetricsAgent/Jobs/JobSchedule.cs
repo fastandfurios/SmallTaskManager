@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MetricsAgent.Responses.DTO
+namespace MetricsAgent.Jobs
 {
     public class JobSchedule
     {

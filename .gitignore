@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /MetricsAgent/metrics.db
 /.idea
+/MetricsManager/metrics.db
