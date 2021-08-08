@@ -39,24 +39,22 @@ namespace MetricsManager.DAL.Repositories
 			return connection.QuerySingle<DateTimeOffset>("SELECT ifnull(max(time),0) FROM cpumetrics");
 		}
 
-	    public IList<CpuMetric> GetMetricsFromAgent(int agentId, DateTimeOffset fromTime, DateTimeOffset toTime)
+	    public IEnumerable<CpuMetric> GetMetricsFromAgent(int agentId, DateTimeOffset fromTime, DateTimeOffset toTime)
 	    {
 			using var connection = _connection.GetOpenedConnection();
 
 			return connection
 				.Query<CpuMetric>("SELECT id, agentId, value, time FROM cpumetrics WHERE time>=@fromTime AND time<=@toTime AND agentId = @agentId",
-					new { agentId = agentId, fromTime = fromTime.ToUnixTimeSeconds(), toTime = toTime.ToUnixTimeSeconds() })
-				.ToList();
+					new { agentId = agentId, fromTime = fromTime.ToUnixTimeSeconds(), toTime = toTime.ToUnixTimeSeconds() });
 		}
 
-	    public IList<CpuMetric> GetMetricsFromAllCluster(DateTimeOffset fromTime, DateTimeOffset toTime)
+	    public IEnumerable<CpuMetric> GetMetricsFromAllCluster(DateTimeOffset fromTime, DateTimeOffset toTime)
 	    {
 			using var connection = _connection.GetOpenedConnection();
 
 			return connection
 				.Query<CpuMetric>("SELECT id, agentId, value, time FROM cpumetrics WHERE time>=@fromTime AND time<=@toTime",
-					new { fromTime = fromTime.ToUnixTimeSeconds(), toTime = toTime.ToUnixTimeSeconds() })
-				.ToList();
+					new { fromTime = fromTime.ToUnixTimeSeconds(), toTime = toTime.ToUnixTimeSeconds() });
 		}
     }
 }
