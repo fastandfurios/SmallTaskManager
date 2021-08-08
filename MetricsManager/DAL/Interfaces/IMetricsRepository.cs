@@ -10,7 +10,7 @@ namespace MetricsManager.DAL.Interfaces
     {
 	    void Create(T item);
 	    DateTimeOffset GetMaxDate();
-	    IList<T> GetMetricsFromAgent(int agentId, DateTimeOffset fromTime, DateTimeOffset toTime);
-	    IList<T> GetMetricsFromAllCluster(DateTimeOffset fromTime, DateTimeOffset toTime);
+	    IEnumerable<T> GetMetricsFromAgent(int agentId, DateTimeOffset fromTime, DateTimeOffset toTime);
+	    IEnumerable<T> GetMetricsFromAllCluster(DateTimeOffset fromTime, DateTimeOffset toTime);
     }
 }
