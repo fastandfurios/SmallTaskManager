@@ -35,33 +35,33 @@ namespace MetricsManagerClient.ViewModels
         }
 
         private DelegateCommand<string> _command = null;
-        public DelegateCommand<string> Command => _command ??= new DelegateCommand<string>(GetMetrics);
+        public DelegateCommand<string> Command => _command ??= new DelegateCommand<string>(async s => await GetMetricsAsync(s));
         
-        private void GetMetrics(string parameter)
+        private async Task GetMetricsAsync(string parameter)
         {
             switch (parameter)
             {
                 case "CpuCommand":
-                    GetCpuMetrics();
+                    await GetCpuMetrics();
                     break;
                 case "NETCommand":
-                    GetDotNetMetrics();
+                    await GetDotNetMetrics();
                     break;
                 case "HddCommand":
-                    GetHddMetrics();
+                    await GetHddMetrics();
                     break;
                 case "NetworkCommand":
-                    GetNetworkMetrics();
+                    await GetNetworkMetrics();
                     break;
                 case "RamCommand":
-                    GetRamMetrics();
+                    await GetRamMetrics();
                     break;
             }
         }
 
-        private void GetCpuMetrics()
+        private async Task GetCpuMetrics()
         {
-            var response = _agentClient.GetAllMetrics<CpuMetricsApiResponse>(
+            var response = await _agentClient.GetAllMetrics<CpuMetricsApiResponse>(
                 new CpuMetricsApiRequest
                 {
                     FromTime = DateTimeOffset.Parse(FromTime),
@@ -74,9 +74,9 @@ namespace MetricsManagerClient.ViewModels
             }
         }
 
-        private void GetDotNetMetrics()
+        private async Task GetDotNetMetrics()
         {
-            var response = _agentClient.GetAllMetrics<DotNetMetricsApiResponse>(new DotNetMetricsApiRequest()
+            var response = await _agentClient.GetAllMetrics<DotNetMetricsApiResponse>(new DotNetMetricsApiRequest()
             {
                 FromTime = DateTimeOffset.Parse(FromTime),
                 ToTime = DateTimeOffset.Parse(ToTime)
@@ -88,9 +88,9 @@ namespace MetricsManagerClient.ViewModels
             }
         }
 
-        private void GetHddMetrics()
+        private async Task GetHddMetrics()
         {
-            var response = _agentClient.GetAllMetrics<HddMetricsApiResponse>(new HddMetricsApiRequest()
+            var response = await _agentClient.GetAllMetrics<HddMetricsApiResponse>(new HddMetricsApiRequest()
             {
                 FromTime = DateTimeOffset.Parse(FromTime),
                 ToTime = DateTimeOffset.Parse(ToTime)
@@ -102,9 +102,9 @@ namespace MetricsManagerClient.ViewModels
             }
         }
 
-        private void GetNetworkMetrics()
+        private async Task GetNetworkMetrics()
         {
-            var response = _agentClient.GetAllMetrics<NetworkMetricsApiResponse>(new NetworkMetricsApiRequest()
+            var response = await _agentClient.GetAllMetrics<NetworkMetricsApiResponse>(new NetworkMetricsApiRequest()
             {
                 FromTime = DateTimeOffset.Parse(FromTime),
                 ToTime = DateTimeOffset.Parse(ToTime)
@@ -116,9 +116,9 @@ namespace MetricsManagerClient.ViewModels
             }
         }
 
-        private void GetRamMetrics()
+        private async Task GetRamMetrics()
         {
-            var response = _agentClient.GetAllMetrics<RamMetricsApiResponse>(new RamMetricsApiRequest()
+            var response = await _agentClient.GetAllMetrics<RamMetricsApiResponse>(new RamMetricsApiRequest()
             {
                 FromTime = DateTimeOffset.Parse(FromTime),
                 ToTime = DateTimeOffset.Parse(ToTime)

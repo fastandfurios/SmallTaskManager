@@ -32,7 +32,7 @@ namespace MetricsManager.Jobs
 			_mapper = mapper;
 		}
 
-		public Task Execute(IJobExecutionContext context)
+		public async Task Execute(IJobExecutionContext context)
 	    {
 			var maxDate = _dotNetMetricsRepository.GetMaxDate();
 
@@ -40,26 +40,24 @@ namespace MetricsManager.Jobs
 
 			var metrics = new DotNetMetricsApiResponse();
 
-			foreach (var registerObject in registerObjects)
-			{
-				metrics = _metricsAgentClient.GetDotNetMetrics(new DotNetHeapMetricsApiRequest
-				{
-					ClientBaseAddress = new Uri(registerObject.AgentUrl),
-					FromTime = maxDate,
-					ToTime = DateTimeOffset.UtcNow
-				});
+            foreach (var registerObject in registerObjects)
+            {
+                metrics = await _metricsAgentClient.GetDotNetMetrics(new DotNetHeapMetricsApiRequest
+                {
+                    ClientBaseAddress = new Uri(registerObject.AgentUrl),
+                    FromTime = maxDate,
+                    ToTime = DateTimeOffset.UtcNow
+                });
 
-				if (registerObject.Enabled)
-				{
-					foreach (var metric in metrics.Metrics)
-					{
-						metric.AgentId = registerObject.AgentId;
-						_dotNetMetricsRepository.Create(_mapper.Map<DotNetMetric>(metric));
-					}
-				}
-			}
-
-			return Task.CompletedTask;
-		}
+                if (registerObject.Enabled)
+                {
+                    foreach (var metric in metrics.Metrics)
+                    {
+                        metric.AgentId = registerObject.AgentId;
+                        _dotNetMetricsRepository.Create(_mapper.Map<DotNetMetric>(metric));
+                    }
+                }
+            }
+        }
     }
 }

@@ -10,6 +10,6 @@ namespace MetricsManagerClient.Client
 {
     public interface IMetricsAgentClient
     {
-        TResponse GetAllMetrics<TResponse>(Object request, string keyword);
+        Task<TResponse> GetAllMetrics<TResponse>(Object request, string keyword);
     }
 }

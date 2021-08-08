@@ -15,14 +15,14 @@ namespace MetricsManagerClient.Client
     public class MetricsAgentClient : IMetricsAgentClient
     {
         private readonly HttpClient _httpClient;
-        public Uri ClientBaseAddress => new("http://localhost:61461");
+        private Uri ClientBaseAddress => new("http://localhost:61461");
 
         public MetricsAgentClient(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
 
-        public TResponse GetAllMetrics<TResponse>(Object request, string keyword)
+        public async Task<TResponse> GetAllMetrics<TResponse>(Object request, string keyword)
         {
             Type type = request.GetType();
             DateTimeOffset fromTimeTemp = (DateTimeOffset)type.GetProperty("FromTime")?.GetValue(request);
@@ -35,13 +35,13 @@ namespace MetricsManagerClient.Client
 
             try
             {
-                var response = _httpClient.SendAsync(httpRequest).Result;
+                var response = await _httpClient.SendAsync(httpRequest);
 
-                using var responseStream = response.Content.ReadAsStreamAsync().Result;
+                await using var responseStream = await response.Content.ReadAsStreamAsync();
 
                 var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
-                return JsonSerializer.DeserializeAsync<TResponse>(responseStream, options).Result;
+                return await JsonSerializer.DeserializeAsync<TResponse>(responseStream, options);
             }
             catch (Exception e)
             {
