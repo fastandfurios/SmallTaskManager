@@ -12,7 +12,7 @@ namespace MetricsManager.DAL.Repositories
 {
     public class NetworkMetricsRepository : INetworkMetricsRepository
     {
-		private IConnection _connection;
+		private readonly IConnection _connection;
 
         public NetworkMetricsRepository(IConnection connection)
         {
@@ -45,18 +45,16 @@ namespace MetricsManager.DAL.Repositories
 
 			return connection
 				.Query<NetworkMetric>("SELECT id, agentId, value, time FROM networkmetrics WHERE time>=@fromTime AND time<=@toTime AND agentId = @agentId",
-					new { agentId = agentId, fromTime = fromTime.ToUnixTimeSeconds(), toTime = toTime.ToUnixTimeSeconds() })
-				.ToList();
+					new { agentId = agentId, fromTime = fromTime.ToUnixTimeSeconds(), toTime = toTime.ToUnixTimeSeconds() });
 		}
 
 	    public IEnumerable<NetworkMetric> GetMetricsFromAllCluster(DateTimeOffset fromTime, DateTimeOffset toTime)
 	    {
 			using var connection = _connection.GetOpenedConnection();
 
-            return connection
-                .Query<NetworkMetric>(
-                    "SELECT id, agentId, value, time FROM networkmetrics WHERE time>=@fromTime AND time<=@toTime",
-                    new {fromTime = fromTime.ToUnixTimeSeconds(), toTime = toTime.ToUnixTimeSeconds()});
-        }
+			return connection
+				.Query<NetworkMetric>("SELECT id, agentId, value, time FROM networkmetrics WHERE time>=@fromTime AND time<=@toTime",
+					new { fromTime = fromTime.ToUnixTimeSeconds(), toTime = toTime.ToUnixTimeSeconds() });
+		}
     }
 }

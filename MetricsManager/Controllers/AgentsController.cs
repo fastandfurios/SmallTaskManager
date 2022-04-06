@@ -22,6 +22,23 @@ namespace MetricsManager.Controllers
 			_repository = repository;
 		}
 
+        /// <summary>
+        /// Регистрирует агентов и сохраняет их
+        /// </summary>
+        /// <remarks>
+        /// Пример запроса:
+        ///
+        ///     POST Agents/register
+        ///		{
+        ///			"agentId":1,
+        ///			"agentUrl":"http://example",
+        ///			"enabled":true
+		///		}
+        ///
+        /// </remarks>
+        /// <returns>Зарегистрированного агента</returns>
+        /// <response code="200">если все хорошо</response>
+        /// <response code="400">если передали не правильные параметры</response>
 		[HttpPost("register")]
 		public IActionResult RegisterAgent([FromBody] Agents agent)
 		{
@@ -37,6 +54,19 @@ namespace MetricsManager.Controllers
 			return Ok(agent);
 		}
 
+		/// <summary>
+		/// Включает агента по его Id
+		/// </summary>
+		/// <remarks>
+		/// Пример запроса:
+		///
+		///     PUT Agents/enable/128
+		///
+		/// </remarks>
+		/// <returns>Включенного агента</returns>
+		/// <param name="agentId">Id агента</param>
+        /// <response code="200">если все хорошо</response>
+		/// <response code="400">если передали не правильные параметры</response>
 		[HttpPut("enable/{agentId}")]
 		public IActionResult EnableAgentById([FromRoute] int agentId)
 		{
@@ -47,6 +77,19 @@ namespace MetricsManager.Controllers
 			return Ok(agent);
 		}
 
+        /// <summary>
+        /// Выключает агента по его Id
+        /// </summary>
+        /// <remarks>
+        /// Пример запроса:
+        ///
+        ///     PUT Agents/disable/50
+        ///
+        /// </remarks>
+        /// <returns>Выключенного агента</returns>
+        /// <param name="agentId">Id агента</param>
+        /// <response code="200">если все хорошо</response>
+        /// <response code="400">если передали не правильные параметры</response>
 		[HttpPut("disable/{agentId}")]
 		public IActionResult DisableAgentById([FromRoute] int agentId)
 		{
@@ -57,6 +100,18 @@ namespace MetricsManager.Controllers
 			return Ok(agent);
 		}
 
+        /// <summary>
+        /// Получает список всех агентов
+        /// </summary>
+        /// <remarks>
+        /// Пример запроса:
+        ///
+        ///     GET Agents/objects
+        ///
+        /// </remarks>
+        /// <returns>Выключенного агента</returns>
+        /// <response code="200">если все хорошо</response>
+        /// <response code="400">если передали не правильные параметры</response>
 		[HttpGet("objects")]
 		public IActionResult GetRegisterObjects()
 		{

@@ -12,7 +12,7 @@ namespace MetricsManager.DAL.Repositories
 {
     public class DotNetMetricsRepository : IDotNetMetricsRepository
     {
-		private IConnection _connection;
+		private readonly IConnection _connection;
 
         public DotNetMetricsRepository(IConnection connection)
         {
@@ -52,10 +52,10 @@ namespace MetricsManager.DAL.Repositories
 	    {
 			using var connection = _connection.GetOpenedConnection();
 
-            return connection
-                .Query<DotNetMetric>(
-                    "SELECT id, agentId, value, time FROM dotnetmetrics WHERE time>=@fromTime AND time<=@toTime",
-                    new {fromTime = fromTime.ToUnixTimeSeconds(), toTime = toTime.ToUnixTimeSeconds()});
-        }
-    }
+
+			return connection
+				.Query<DotNetMetric>("SELECT id, agentId, value, time FROM dotnetmetrics WHERE time>=@fromTime AND time<=@toTime",
+					new { fromTime = fromTime.ToUnixTimeSeconds(), toTime = toTime.ToUnixTimeSeconds() });
+		  }
+      }
 }

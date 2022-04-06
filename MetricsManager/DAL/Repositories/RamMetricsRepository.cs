@@ -12,7 +12,7 @@ namespace MetricsManager.DAL.Repositories
 {
     public class RamMetricsRepository : IRamMetricsRepository
     {
-		private IConnection _connection;
+		private readonly IConnection _connection;
 
         public RamMetricsRepository(IConnection connection)
         {
@@ -52,10 +52,9 @@ namespace MetricsManager.DAL.Repositories
 	    {
 			using var connection = _connection.GetOpenedConnection();
 
-            return connection
-                .Query<RamMetric>(
-                    "SELECT id, agentId, value, time FROM rammetrics WHERE time>=@fromTime AND time<=@toTime",
-                    new {fromTime = fromTime.ToUnixTimeSeconds(), toTime = toTime.ToUnixTimeSeconds()});
-        }
+			return connection
+				.Query<RamMetric>("SELECT id, agentId, value, time FROM rammetrics WHERE time>=@fromTime AND time<=@toTime",
+					new { fromTime = fromTime.ToUnixTimeSeconds(), toTime = toTime.ToUnixTimeSeconds() });
+		}
     }
 }

@@ -45,8 +45,7 @@ namespace MetricsManager.DAL.Repositories
 
 			return connection
 				.Query<CpuMetric>("SELECT id, agentId, value, time FROM cpumetrics WHERE time>=@fromTime AND time<=@toTime AND agentId = @agentId",
-					new { agentId = agentId, fromTime = fromTime.ToUnixTimeSeconds(), toTime = toTime.ToUnixTimeSeconds() })
-				.ToList();
+					new { agentId = agentId, fromTime = fromTime.ToUnixTimeSeconds(), toTime = toTime.ToUnixTimeSeconds() });
 		}
 
 	    public IEnumerable<CpuMetric> GetMetricsFromAllCluster(DateTimeOffset fromTime, DateTimeOffset toTime)
