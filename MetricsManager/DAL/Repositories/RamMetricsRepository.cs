@@ -12,7 +12,7 @@ namespace MetricsManager.DAL.Repositories
 {
     public class RamMetricsRepository : IRamMetricsRepository
     {
-		private IConnection _connection;
+		private readonly IConnection _connection;
 
         public RamMetricsRepository(IConnection connection)
         {

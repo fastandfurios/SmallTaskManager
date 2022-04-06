@@ -32,7 +32,7 @@ namespace MetricsManager.Jobs
 			_mapper = mapper;
 	    }
 
-	    public Task Execute(IJobExecutionContext context)
+	    public async Task Execute(IJobExecutionContext context)
 	    {
 			var maxDate = _cpuMetricsRepository.GetMaxDate();
 
@@ -42,7 +42,7 @@ namespace MetricsManager.Jobs
 
 			foreach (var registerObject in registerObjects)
 			{
-				metrics = _metricsAgentClient.GetAllCpuMetrics(new GetAllCpuMetricsApiRequest
+				metrics = await _metricsAgentClient.GetAllCpuMetrics(new GetAllCpuMetricsApiRequest
 				{
 					ClientBaseAddress = new Uri(registerObject.AgentUrl),
 					FromTime = maxDate,
@@ -58,8 +58,6 @@ namespace MetricsManager.Jobs
 					}
 				}
 			}
-
-			return Task.CompletedTask;
-	    }
+        }
     }
 }

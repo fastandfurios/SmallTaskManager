@@ -12,7 +12,7 @@ namespace MetricsManager.DAL.Repositories
 {
     public class NetworkMetricsRepository : INetworkMetricsRepository
     {
-		private IConnection _connection;
+		private readonly IConnection _connection;
 
         public NetworkMetricsRepository(IConnection connection)
         {
